@@ -1,0 +1,8 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/app", "destination": "/index.html" },
+    { "source": "/pitch/one-pager", "destination": "/one-pager.html" },
+    { "source": "/api/:path*", "destination": "https://margin-teacher.vercel.app/api/:path*" }
+  ]
+}
