@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Margin One-Pager</title>
+<meta name="description" content="Margin value proposition for department chairs: one page, printable.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F3F2EC;--paper:#FFFFFF;--line:#E4E2D8;--ink:#141C19;--ink-2:#46514C;--ink-3:#66716B;--primary:#1B2A25;--on-primary:#F6F4EC;--accent:#F2C94C;--hl:#F7E39A;--hl-soft:#FBF4D8;--ok:#2F6E49;--ok-soft:#DFEFE4;--cool:#2B6382;--cool-soft:#E0ECF3;--focus:#2B6382;
+  --serif:'Fraunces',Georgia,serif;--sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1412;--paper:#151D1A;--line:#25302C;--ink:#ECEAE2;--ink-2:#BCC4BE;--ink-3:#8E9993;--primary:#ECEAE2;--on-primary:#121A17;--accent:#F0CF5E;--hl:#5A4C17;--hl-soft:#25231A;--ok:#8FD1A6;--ok-soft:#18301F;--cool:#8EC2E0;--cool-soft:#162D3A;--focus:#8EC2E0;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1412;--paper:#151D1A;--line:#25302C;--ink:#ECEAE2;--ink-2:#BCC4BE;--ink-3:#8E9993;--primary:#ECEAE2;--on-primary:#121A17;--accent:#F0CF5E;--hl:#5A4C17;--hl-soft:#25231A;--ok:#8FD1A6;--ok-soft:#18301F;--cool:#8EC2E0;--cool-soft:#162D3A;--focus:#8EC2E0;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+h1,h2,h3,p,ul{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:8px}
+.bar{max-width:820px;margin:0 auto;padding:20px 16px 0;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:12px;font:600 14px var(--sans);border:1px solid var(--line);background:var(--paper);color:var(--ink);text-decoration:none;cursor:pointer}
+.btn.primary{background:var(--primary);color:var(--on-primary);border-color:transparent}
+.page{max-width:820px;margin:16px auto 48px;background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:clamp(24px,5vw,52px)}
+.brand{display:flex;align-items:center;gap:10px;font:500 20px/1 var(--serif)}
+.mark{width:24px;height:24px}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+h1{font:500 clamp(30px,4.6vw,44px)/1.06 var(--serif);letter-spacing:-.03em;margin-top:22px}
+h1 mark{background:linear-gradient(transparent 55%,var(--hl) 55%,var(--hl) 92%,transparent 92%);color:inherit;padding:0 3px}
+.lede{font-size:17px;color:var(--ink-2);margin-top:12px;max-width:60ch}
+h2{font:500 20px/1.3 var(--serif);margin:28px 0 10px;letter-spacing:-.01em}
+.problems{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px}
+.problems li{display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:baseline;border-top:1px solid var(--line);padding-top:12px}
+.problems li:first-child{border-top:0;padding-top:0}
+.problems b{font:500 24px/1.3 var(--serif);letter-spacing:-.02em}
+.problems small{display:block;font-size:12px;color:var(--ink-3);margin-top:2px}
+.problems small a{word-break:break-all}
+.ahas{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.aha{border:1px solid var(--line);border-radius:16px;padding:14px}
+.aha .n{font:600 12px var(--sans);color:var(--ink-3)}
+.aha b{display:block;font:500 17px/1.3 var(--serif);margin:6px 0 6px}
+.aha p{font-size:13.5px;color:var(--ink-2)}
+.privacy{display:flex;gap:12px;align-items:flex-start;background:var(--cool-soft);border-radius:16px;padding:14px 16px;margin-top:22px;font-size:15px}
+.privacy svg{flex:none;color:var(--cool);margin-top:2px}
+.ask{background:var(--hl-soft);border-radius:18px;padding:18px 20px;margin-top:22px}
+.ask h2{margin-top:0}
+.ask ul{padding-left:18px;margin-top:8px;display:flex;flex-direction:column;gap:4px;font-size:14.5px}
+.foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:24px;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3)}
+@media (max-width:640px){.ahas{grid-template-columns:1fr}.problems li{grid-template-columns:1fr;gap:2px}}
+@media print{
+  @page{size:A4;margin:11mm}
+  :root{--bg:#fff;--paper:#fff;--line:#DDD;--ink:#111;--ink-2:#333;--ink-3:#555;--hl:#F7E39A;--hl-soft:#FBF4D8;--cool-soft:#E6EEF3;color-scheme:light}
+  body{background:#fff;font-size:12px;line-height:1.42}
+  .lede{font-size:12.5px!important;margin-top:8px}
+  .problems{gap:6px}.problems li{padding-top:9px;grid-template-columns:90px 1fr}
+  .aha{padding:10px 12px}.aha b{font-size:14px;margin:4px 0}.aha p{font-size:12px}
+  .privacy{margin-top:12px;padding:10px 12px;font-size:12px}
+  .ask{margin-top:12px;padding:12px 14px}.ask ul{font-size:12px;gap:2px}
+  .foot{margin-top:10px;padding-top:8px;font-size:12px}
+  .bar{display:none}
+  .page{border:0;border-radius:0;margin:0;padding:0;max-width:none}
+  h1{font-size:26px;margin-top:10px}
+  h2{margin:12px 0 6px;font-size:15px}
+  .lede{font-size:14px}
+  .problems b{font-size:17px}
+  .aha,.privacy,.ask{break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .privacy,.ask,h1 mark{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="bar"><a class="btn" id="back" href="/pitch">Back to the pitch</a><button type="button" class="btn primary" onclick="window.print()">Print or save as PDF</button></div>
+<article class="page">
+  <div class="brand"><svg class="mark" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="8" fill="var(--primary)"/><path d="M10 6.5v15" stroke="var(--on-primary)" stroke-width="1.6" stroke-linecap="round" opacity=".55"/><path d="M14 10h7M14 14h5M14 18h6" stroke="var(--on-primary)" stroke-width="1.6" stroke-linecap="round"/><circle cx="10" cy="14" r="2.6" fill="var(--accent)"/></svg>Margin <span class="kicker" style="margin-left:auto">For department chairs</span></div>
+  <h1 id="headline"><mark>Your course file builds itself while you teach.</mark></h1>
+  <p class="lede">Margin is a personal command centre for private-university teachers in Bangladesh, provided by the university. Teachers get their evenings back; the department gets accreditation-ready course files without chasing anyone.</p>
+
+  <h2>The problem</h2>
+  <ul class="problems">
+    <li><b>12 to 15</b><div>courses a year for many private-university teachers, against a UGC recommendation of 8. There is no slack left for paperwork or research.<small>The Business Standard: <a href="https://www.tbsnews.net/thoughts/path-reforming-private-universities-942346">tbsnews.net/thoughts/path-reforming-private-universities-942346</a></small></div></li>
+    <li><b>BAC 4-8</b><div>requires a documented course file with CLO attainment for every course. It is usually compiled at the last minute, and chairs spend weeks chasing it before visits.<small>BAC Accreditation Manual: <a href="https://iqac.daffodilvarsity.edu.bd/images/pdf/Accreditation-Manual.pdf">iqac.daffodilvarsity.edu.bd/images/pdf/Accreditation-Manual.pdf</a></small></div></li>
+    <li><b>Papers</b><div>decide promotion, increasingly in Scopus-indexed journals, yet teaching leaves research for late nights. Good teachers leave, and their courses land on everyone else.<small>IIUC faculty rules: <a href="https://www.iiuc.ac.bd/career/details/18">iiuc.ac.bd/career/details/18</a></small></div></li>
+  </ul>
+
+  <h2>Three moments teachers remember</h2>
+  <div class="ahas" id="ahas"></div>
+
+  <div class="privacy"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><div><b>Our privacy promise:</b> your notes, promises and goals are never visible to the university. The department sees operational status only, such as grading counts and course-file progress. No teacher is ranked. This is built into the data model and written into the contract.</div></div>
+
+  <section class="ask">
+    <h2>The ask: one department, one semester, free</h2>
+    <p style="font-size:14.5px">Run a pilot of Margin in your department next semester.</p>
+    <ul>
+      <li><b>We do:</b> import your calendar, course allocations and rosters from CSV; connect university Google or Microsoft sign-in; run a one-hour faculty workshop; give you the live department view.</li>
+      <li><b>You do:</b> introduce us to IQAC and IT, and invite 8 to 25 teachers to try it.</li>
+      <li><b>We measure together:</b> weekly use (target 70%), course files on time (target 90%), and time spent compiling them (target: half of last term).</li>
+      <li><b>Guarantee:</b> if most teachers aren't using it weekly after 60 days, the pilot is extended free.</li>
+    </ul>
+  </section>
+
+  <div class="foot"><span>Margin · v0.4 prototype · figures shown in demos are illustrative until the pilot</span><span>Contact: add your name, email and phone before printing</span></div>
+</article>
+<script>
+(function(){
+  const H={coursefile:'Your course file builds itself while you teach.',career:'Finish the papers your promotion needs, without giving up your evenings.',promises:'Never drop a promise to a student again.'};
+  const A={
+    coursefile:['The course file fills itself in','Outline, attendance, samples, marks and CLO attainment arrive from the portal, Google Classroom and grading. The teacher writes two lines; the chair\'s view turns green.'],
+    promises:['Nothing a student was promised gets lost','Margin reads a pasted email or WhatsApp thread, in English, Bangla or Banglish, and turns every promise, request and deadline into a tracked item. One tap to keep it.'],
+    career:['Promotion becomes a visible plan','The university\'s promotion rule becomes a personal tracker. When a paper is accepted, the projected promotion date moves forward by months.']};
+  const p=new URLSearchParams(location.search);let v=(p.get('headline')||'coursefile').toLowerCase();if(!H[v])v='coursefile';
+  if(p.get('theme')==='dark'||p.get('theme')==='light')document.documentElement.dataset.theme=p.get('theme');
+  document.querySelector('#headline mark').textContent=H[v];
+  const order={coursefile:['coursefile','promises','career'],career:['career','promises','coursefile'],promises:['promises','coursefile','career']}[v];
+  document.getElementById('ahas').innerHTML=order.map((k,i)=>`<div class="aha"><span class="n">0${i+1}</span><b>${A[k][0]}</b><p>${A[k][1]}</p></div>`).join('');
+  const served=location.protocol.startsWith('http');document.getElementById('back').href=(served?'/pitch':'pitch.html')+location.search;
+})();
+</script>
+</body>
+</html>
