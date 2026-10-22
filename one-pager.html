@@ -74,8 +74,8 @@ h2{font:500 20px/1.3 var(--serif);margin:28px 0 10px;letter-spacing:-.01em}
 <div class="bar"><a class="btn" id="back" href="/pitch">Back to the pitch</a><button type="button" class="btn primary" onclick="window.print()">Print or save as PDF</button></div>
 <article class="page">
   <div class="brand"><svg class="mark" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="8" fill="var(--primary)"/><path d="M10 6.5v15" stroke="var(--on-primary)" stroke-width="1.6" stroke-linecap="round" opacity=".55"/><path d="M14 10h7M14 14h5M14 18h6" stroke="var(--on-primary)" stroke-width="1.6" stroke-linecap="round"/><circle cx="10" cy="14" r="2.6" fill="var(--accent)"/></svg>Margin <span class="kicker" style="margin-left:auto">For department chairs</span></div>
-  <h1 id="headline"><mark>Your course file builds itself while you teach.</mark></h1>
-  <p class="lede">Margin is a personal command centre for private-university teachers in Bangladesh, provided by the university. Teachers get their evenings back; the department gets accreditation-ready course files without chasing anyone.</p>
+  <h1 id="headline"><mark>Teach better. Grow faster.</mark></h1>
+  <p class="lede">Margin helps every teacher in your department manage their teaching and grow, every trimester. Teachers see what their students actually learned and move toward promotion; the department gets CLO results and accreditation-ready course files without chasing anyone.</p>
 
   <h2>The problem</h2>
   <ul class="problems">
@@ -84,35 +84,37 @@ h2{font:500 20px/1.3 var(--serif);margin:28px 0 10px;letter-spacing:-.01em}
     <li><b>Papers</b><div>decide promotion, increasingly in Scopus-indexed journals, yet teaching leaves research for late nights. Good teachers leave, and their courses land on everyone else.<small>IIUC faculty rules: <a href="https://www.iiuc.ac.bd/career/details/18">iiuc.ac.bd/career/details/18</a></small></div></li>
   </ul>
 
-  <h2>Three moments teachers remember</h2>
+  <h2>Moments teachers remember</h2>
   <div class="ahas" id="ahas"></div>
 
   <div class="privacy"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><div><b>Our privacy promise:</b> your notes, promises and goals are never visible to the university. The department sees operational status only, such as grading counts and course-file progress. No teacher is ranked. This is built into the data model and written into the contract.</div></div>
 
   <section class="ask">
-    <h2>The ask: one department, one semester, free</h2>
-    <p style="font-size:14.5px">Run a pilot of Margin in your department next semester.</p>
+    <h2>The ask: one department, one trimester</h2>
+    <p style="font-size:14.5px">Run a pilot of Margin in your department next trimester.</p>
     <ul>
-      <li><b>We do:</b> import your calendar, course allocations and rosters from CSV; connect university Google or Microsoft sign-in; run a one-hour faculty workshop; give you the live department view.</li>
+      <li><b>We do:</b> set everything up from your syllabi and the portal's Excel exports, with no integration; connect university Google or Microsoft sign-in; run a one-hour faculty workshop; give you the live department view.</li>
       <li><b>You do:</b> introduce us to IQAC and IT, and invite 8 to 25 teachers to try it.</li>
-      <li><b>We measure together:</b> weekly use (target 70%), course files on time (target 90%), and time spent compiling them (target: half of last term).</li>
-      <li><b>Guarantee:</b> if most teachers aren't using it weekly after 60 days, the pilot is extended free.</li>
+      <li><b>We measure together:</b> 30 of 50 teachers active weekly, 70% of AI drafts approved with light edits, the full CLO loop run in 5 courses, and your decision to continue.</li>
+      <li><b>Price after the pilot:</b> 999 tk per teacher a month, paid by the department or university (or 9,990 tk a year upfront).</li>
+      <li><b>Guarantee:</b> if 30 of 50 teachers aren't using it weekly by the end of the trimester, you don't pay.</li>
     </ul>
   </section>
 
-  <div class="foot"><span>Margin · v0.4 prototype · figures shown in demos are illustrative until the pilot</span><span>Contact: add your name, email and phone before printing</span></div>
+  <div class="foot"><span>Margin · v12 prototype · figures shown in demos are illustrative until the pilot</span><span>Contact: add your name, email and phone before printing</span></div>
 </article>
 <script>
 (function(){
-  const H={coursefile:'Your course file builds itself while you teach.',career:'Finish the papers your promotion needs, without giving up your evenings.',promises:'Never drop a promise to a student again.'};
+  const H={growth:'Teach better. Grow faster.',coursefile:'Your course file builds itself while you teach.',career:'Finish the papers your promotion needs, without giving up your evenings.',promises:'Never drop a promise to a student again.'};
   const A={
-    coursefile:['The course file fills itself in','Outline, attendance, samples, marks and CLO attainment arrive from the portal, Google Classroom and grading. The teacher writes two lines; the chair\'s view turns green.'],
+    insight:['Teachers see what students learned','Marks become CLO results in seconds. Margin points to the weak outcome and the hardest question, then drafts a practice quiz the teacher approves.'],
+    coursefile:['The course file fills itself in','Outline, attendance, samples, marks and CLO attainment come from the syllabus, the portal\'s Excel exports and grading. The teacher writes two lines; the chair\'s view turns green.'],
     promises:['Nothing a student was promised gets lost','Margin reads a pasted email or WhatsApp thread, in English, Bangla or Banglish, and turns every promise, request and deadline into a tracked item. One tap to keep it.'],
     career:['Promotion becomes a visible plan','The university\'s promotion rule becomes a personal tracker. When a paper is accepted, the projected promotion date moves forward by months.']};
-  const p=new URLSearchParams(location.search);let v=(p.get('headline')||'coursefile').toLowerCase();if(!H[v])v='coursefile';
+  const p=new URLSearchParams(location.search);let v=(p.get('headline')||'growth').toLowerCase();if(!H[v])v='growth';
   if(p.get('theme')==='dark'||p.get('theme')==='light')document.documentElement.dataset.theme=p.get('theme');
   document.querySelector('#headline mark').textContent=H[v];
-  const order={coursefile:['coursefile','promises','career'],career:['career','promises','coursefile'],promises:['promises','coursefile','career']}[v];
+  const order={growth:['insight','career','coursefile'],coursefile:['coursefile','insight','career'],career:['career','insight','coursefile'],promises:['promises','insight','career']}[v];
   document.getElementById('ahas').innerHTML=order.map((k,i)=>`<div class="aha"><span class="n">0${i+1}</span><b>${A[k][0]}</b><p>${A[k][1]}</p></div>`).join('');
   const served=location.protocol.startsWith('http');document.getElementById('back').href=(served?'/pitch':'pitch.html')+location.search;
 })();

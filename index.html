@@ -5,7 +5,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Margin Teacher App</title>
-<meta name="description" content="Margin v3 prototype: a calmer, simplified command centre for private-university teachers, with Today, Teaching, People and Compass.">
+<meta name="description" content="Margin helps private-university teachers manage their teaching and grow, every trimester. Teach better. Grow faster.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -1575,6 +1575,16 @@ button.r9-b:hover{background:var(--sunk)}
   .g11 .g11-mini{display:none}
   .g11 .g11-rep .r9-b{flex-wrap:wrap}
 }
+
+/* v12 */
+.sig-row{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,2fr) 48px;gap:12px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.sig-row:first-of-type{border-top:0}
+.sig-bar{height:10px;border-radius:5px;background:var(--sunk);overflow:hidden}
+.sig-bar i{display:block;height:100%;border-radius:5px;background:var(--ok)}
+.sig-bar i.mid{background:var(--accent)}
+.sig-bar i.low{background:var(--warn)}
+.sig-row b{text-align:right}
+@media (max-width:719px){.sig-row{grid-template-columns:minmax(0,1fr) 48px}.sig-bar{grid-column:1/-1;grid-row:2}}
 </style>
 </head>
 <body>
@@ -1712,16 +1722,16 @@ function seed(){
     reviews:[]},
   courseFiles:[
     {id:'cf1',course:'CSE 201',title:'Data Structures',aid:'a1',submitted:false,items:[
-      {t:'Course outline',s:'Pulled from the portal',st:'done'},{t:'Lesson plan',s:'Submitted in week 1',st:'done'},{t:'Attendance records',s:'From the portal, updated daily',st:'done'},{t:'CLO to PLO mapping',s:'From the approved curriculum',st:'done'},
-      {t:'Assessment samples',s:'Collecting from Google Classroom: 4 of 6',st:'pending'},{t:'Marks distribution',st:'auto'},{t:'CLO attainment',st:'auto'},
+      {t:'Course outline',s:'From the portal\'s Excel export',st:'done'},{t:'Lesson plan',s:'Submitted in week 1',st:'done'},{t:'Attendance records',s:'From the attendance export, weekly',st:'done'},{t:'CLO to PLO mapping',s:'From the approved curriculum',st:'done'},
+      {t:'Assessment samples',s:'Uploaded to Margin: 4 of 6',st:'pending'},{t:'Marks distribution',st:'auto'},{t:'CLO attainment',st:'auto'},
       {t:'Moderated question paper',s:'Upload the moderated midterm paper',st:'needs',kind:'upload'},{t:'Improvement plan',s:'Two lines on what you would change next term',st:'needs',kind:'note'},{t:'Course evaluation summary',s:'Arrives after the term ends',st:'locked'}]},
     {id:'cf2',course:'CSE 305',title:'Database Systems',aid:'a2',submitted:false,items:[
-      {t:'Course outline',s:'Pulled from the portal',st:'done'},{t:'Lesson plan',s:'Submitted in week 1',st:'done'},{t:'Attendance records',s:'From the portal, updated daily',st:'done'},{t:'CLO to PLO mapping',s:'From the approved curriculum',st:'done'},
-      {t:'Assessment samples',s:'From Google Classroom: 6 of 6',st:'done'},{t:'Marks distribution',st:'auto'},{t:'CLO attainment',st:'auto'},
+      {t:'Course outline',s:'From the portal\'s Excel export',st:'done'},{t:'Lesson plan',s:'Submitted in week 1',st:'done'},{t:'Attendance records',s:'From the attendance export, weekly',st:'done'},{t:'CLO to PLO mapping',s:'From the approved curriculum',st:'done'},
+      {t:'Assessment samples',s:'Uploaded to Margin: 6 of 6',st:'done'},{t:'Marks distribution',st:'auto'},{t:'CLO attainment',st:'auto'},
       {t:'Moderated question paper',s:'Uploaded on 28 September',st:'done'},{t:'Improvement plan',s:'Two lines on what you would change next term',st:'needs',kind:'note'},{t:'Course evaluation summary',s:'Arrives after the term ends',st:'locked'}]},
     {id:'cf3',course:'CSE 410',title:'Software Engineering Lab',aid:'a4',submitted:false,items:[
-      {t:'Course outline',s:'Pulled from the portal',st:'done'},{t:'Lesson plan',s:'Submitted in week 1',st:'done'},{t:'Attendance records',s:'From the portal',st:'done'},{t:'CLO to PLO mapping',s:'From the approved curriculum',st:'done'},
-      {t:'Assessment samples',s:'From Google Classroom: 6 of 6',st:'done'},{t:'Marks distribution',st:'auto'},{t:'CLO attainment',st:'auto'},
+      {t:'Course outline',s:'From the portal\'s Excel export',st:'done'},{t:'Lesson plan',s:'Submitted in week 1',st:'done'},{t:'Attendance records',s:'From the attendance export',st:'done'},{t:'CLO to PLO mapping',s:'From the approved curriculum',st:'done'},
+      {t:'Assessment samples',s:'Uploaded to Margin: 6 of 6',st:'done'},{t:'Marks distribution',st:'auto'},{t:'CLO attainment',st:'auto'},
       {t:'Moderated question paper',s:'Uploaded on 2 October',st:'done'},{t:'Improvement plan',s:'Two lines on what you would change next term',st:'needs',kind:'note'},{t:'Course evaluation summary',s:'Arrives after the term ends',st:'locked'}]}]
   };
 }
@@ -1770,7 +1780,7 @@ function impact(){
   const mins=auto*12+held*1.5+S.stats.accepted*4+S.stats.timeSaved;
   return {kept:S.stats.kept,saved:mins/60,research:hoursDone(),held,auto};
 }
-function cfItems(c){const a=S.assignments.find(x=>x.id===c.aid);const L=a?left(a):0;return c.items.map(it=>it.st==='pending'?(L>0?it:Object.assign({},it,{st:'done',s:'From Google Classroom: 6 of 6'})):it.st!=='auto'?it:Object.assign({},it,L>0?{st:'auto',s:`Fills in when grading is done, ${L} scripts left`}:{st:'done',s:it.t==='Marks distribution'?'Generated from your final marks':'Calculated from marks against each CLO'}))}
+function cfItems(c){const a=S.assignments.find(x=>x.id===c.aid);const L=a?left(a):0;return c.items.map(it=>it.st==='pending'?(L>0?it:Object.assign({},it,{st:'done',s:'Uploaded to Margin: 6 of 6'})):it.st!=='auto'?it:Object.assign({},it,L>0?{st:'auto',s:`Fills in when grading is done, ${L} scripts left`}:{st:'done',s:it.t==='Marks distribution'?'Generated from your final marks':'Calculated from marks against each CLO'}))}
 function cfReady(c){return cfItems(c).filter(i=>i.st!=='locked')}
 function cfPct(c){if(c.submitted)return 1;const its=cfReady(c);return its.filter(i=>i.st==='done').length/its.length}
 function cfNeeds(c){return c.submitted?0:c.items.filter(i=>i.st==='needs').length}
@@ -2204,7 +2214,7 @@ function openCourse(id){
   ${L?`<div class="field" style="flex-direction:row;align-items:center;gap:10px"><label for="mps">Your pace</label><select id="mps" data-chg="mins" data-id="${a.id}" style="width:auto">${[2,3,4,5,6,8,10].map(m=>`<option value="${m}" ${m===a.mins?'selected':''}>${m} min a script</option>`).join('')}</select></div>`:''}
   ${L?`<div class="stepper"><button type="button" class="btn sm" data-act="grade" data-id="${a.id}" data-n="10" data-c="${c.id}">+10 graded</button><button type="button" class="btn sm" data-act="grade" data-id="${a.id}" data-n="${L}" data-c="${c.id}">Mark all graded</button></div>`:''}
   <h3>Course file <span style="text-transform:none;letter-spacing:0;font-weight:500">· ${Math.round(cfPct(c)*100)}% · your chair sees this number, nothing else</span></h3>
-  <p class="row-s">Margin builds this from the portal, Google Classroom and your grading. You only handle what needs judgement.</p>
+  <p class="row-s">Margin builds this from your syllabus, your grading and the files you upload. You only handle what needs judgement.</p>
   ${cfList(c,its,STI)}
   ${c.submitted?`<div class="stamp">${ic('check',20,2.4)} Sent to IQAC. Your chair's view turned green.</div>`:`<div style="margin-top:20px"><button type="button" class="btn primary" style="width:100%" data-act="cf-submit" data-c="${c.id}" ${ready?'':'disabled'}>Submit to IQAC</button><p class="row-s" style="text-align:center;margin-top:8px">${ready?'Everything for this term is in.':'Available once every current item is complete.'}</p></div>`}`,'course:'+id);
 }
@@ -2315,11 +2325,11 @@ function vDept(){
 function deptRows(){const mine=S.courseFiles.map(c=>{const a=S.assignments.find(x=>x.id===c.aid);return{c:c.course,t:S.full,g:Math.round(a.graded/a.total*100),f:Math.round(cfPct(c)*100),s:4}});return DEPT.concat(mine)}
 function vAdmin(){
   const rows=deptRows();const r=C().rule;
-  const acc=41+S.stats.accepted,seen=70+S.stats.accepted+S.stats.rejected;
+  const T9=sigTotals(),acc=T9.a+T9.e,seen=T9.t;
   const onTrack=Math.round(rows.filter(x=>x.f>=60||x.f>=100).length/rows.length*100);
   const M=[
     {l:'Teachers active every week',s:'21 of 25 in CSE',v:84,t:70,u:'%'},
-    {l:'AI suggestions accepted or edited',s:`${acc} of ${seen} this term`,v:Math.round(acc/seen*100),t:50,u:'%'},
+    {l:'AI drafts approved, as drafted or after light edits',s:`${acc} of ${seen} teacher decisions this term`,v:Math.round(acc/seen*100),t:70,u:'%'},
     {l:'Course files on track for on-time submission',s:`${rows.filter(x=>x.f>=60).length} of ${rows.length} courses`,v:onTrack,t:90,u:'%'},
     {l:'Research hours protected per teacher, weekly',s:'Anonymous average, opt-in',v:3.4,t:3,u:' h',max:6},
     {l:'Teachers with an active Compass goal',s:'17 of 25',v:68,t:60,u:'%'}];
@@ -2330,10 +2340,10 @@ function vAdmin(){
   ${M.map(m=>{const mx=m.max||100;return `<div class="score"><div class="score-l">${esc(m.l)}<small>${esc(m.s)}</small></div><div class="tm" aria-hidden="true"><i class="${m.v<m.t?'below':''}" style="width:${Math.min(100,m.v/mx*100)}%"></i><span class="tgt" style="left:${m.t/mx*100}%"></span></div><div class="score-v num">${m.v}${m.u}<small>target ${m.t}${m.u}</small></div></div>`}).join('')}
   </section>
   <div class="grid-2">
-    <section class="card rise" style="--i:2"><div class="card-h"><h2>Set up once</h2><span class="badge">CSV, nightly</span></div>
+    <section class="card rise" style="--i:2"><div class="card-h"><h2>Set up once</h2><span class="badge">Excel or CSV, once a trimester</span></div>
       <ul class="list setup">${[['Academic calendar','14 weeks, 2 exam windows, 6 holidays'],['Course allocations','25 teachers, 61 sections'],['Class schedules','412 sessions this term'],['Rosters','3,210 students']].map(x=>`<li><span class="st done">${ic('check',14,2.6)}</span><div class="row-main"><div class="row-t">${x[0]}</div><div class="row-s">${x[1]}</div></div><button type="button" class="btn sm ghost" data-act="reimport">Re-import</button></li>`).join('')}</ul>
       <h3 class="tile-k" style="margin:18px 0 4px">Connections</h3>
-      <ul class="list setup"><li><span class="st done">${ic('check',14,2.6)}</span><div class="row-main"><div class="row-t">Google Workspace sign-in</div><div class="row-s">University accounts only</div></div></li><li><span class="st done">${ic('check',14,2.6)}</span><div class="row-main"><div class="row-t">Gmail and Calendar</div><div class="row-s">21 of 25 teachers opted in, each with their own consent</div></div></li><li><span class="st done">${ic('check',14,2.6)}</span><div class="row-main"><div class="row-t">Google Classroom</div><div class="row-s">Assessment samples for course files</div></div></li></ul>
+      <ul class="list setup"><li><span class="st done">${ic('check',14,2.6)}</span><div class="row-main"><div class="row-t">Google Workspace sign-in</div><div class="row-s">University accounts only</div></div></li><li><span class="st done">${ic('check',14,2.6)}</span><div class="row-main"><div class="row-t">Gmail and Calendar</div><div class="row-s">21 of 25 teachers opted in, each with their own consent</div></div></li><li><span class="st done">${ic('check',14,2.6)}</span><div class="row-main"><div class="row-t">Forward to Margin</div><div class="row-s">Each teacher's own address for notices and assessment samples</div></div></li></ul>
     </section>
     <div style="display:flex;flex-direction:column;gap:20px">
       <section class="card rise" style="--i:3"><div class="card-h"><h2>Promotion rule</h2></div><p class="card-sub">Assistant to Associate Professor. Each teacher sees their own progress, privately.</p>
@@ -2520,11 +2530,11 @@ function drawProto(){
 /* ---------- cover ---------- */
 function showCover(){
   const el=document.createElement('div');el.className='cover';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label','About Margin');
-  const roles=[['people','Teacher','Uses it every day','A calm day, kept promises, course files that build themselves, a path to promotion.'],['dept','Department chair','Champions it','Sees which courses are on track without chasing anyone.'],['flag','University (IQAC, VC)','Pays for it','Accreditation-ready course files, results on time, calmer faculty who stay.'],['lock','IT team','Approves it','University sign-in, CSV setup, nothing extra to maintain.']];
+  const roles=[['people','Teacher','Uses it every day','Plans and assesses every course against its CLOs, sees what students actually learned, and has a clear path to promotion.'],['dept','Department chair','Champions it','Sees CLO results and course files across the department, without chasing anyone.'],['flag','University (IQAC, VC)','Pays for it','Accreditation evidence from real teaching, and faculty who grow and stay. 999 tk per teacher a month.'],['lock','IT team','Approves it','Nothing to integrate: Excel exports, uploads and university Google or Microsoft sign-in.']];
   el.innerHTML=`<div class="cover-in"><div>
     <div class="brand" style="padding:0">${MARK}<span>Margin</span></div>
-    <h1><span>The portal manages courses.</span> Margin manages the teacher's day and career.</h1>
-    <p class="lede">A personal command centre for private-university teachers in Bangladesh, provided and paid for by their university.</p>
+    <h1><span>Teach better.</span> Grow faster.</h1>
+    <p class="lede">Margin helps every private-university teacher in Bangladesh manage their teaching and grow, every trimester. Teachers use it every day; the department or university pays for it.</p>
     <div class="facts4">
       <div><b>12 to 15</b><span>courses a year for many teachers, against a UGC recommendation of 8</span><a href="https://www.tbsnews.net/thoughts/path-reforming-private-universities-942346" target="_blank" rel="noopener">The Business Standard</a></div>
       <div><b>BAC 4-8</b><span>requires a documented course file for every course, every term</span><a href="https://iqac.daffodilvarsity.edu.bd/images/pdf/Accreditation-Manual.pdf" target="_blank" rel="noopener">BAC Accreditation Manual</a></div>
@@ -2544,7 +2554,7 @@ const TOUR=[
   {role:'teacher',view:'today',sel:'[data-tour="head"]',k:'Tuesday, 8:55 am, on the bus',t:'One sentence answers "what do I owe today?"',b:'Dr. Rahman teaches three courses in a heavy midterm week. Margin already knows his term from the university\'s files. He typed nothing to set it up.'},
   {sel:'[data-tour="ai"]',k:'Promises with AI capture',t:'Margin catches the promise he would have forgotten',b:'A student emailed asking to submit on Sunday. Margin suggests it as a promise, showing the exact line. One tap adds it; nothing is ever sent without him.',try:{l:'Tap "Add promise"',run:()=>{const s=S.suggestions.find(x=>x.id==='sg1');if(s&&!s.done){snap();s.done=true;S.stats.accepted++;S.promises.push({id:uid(),sid:s.sid,who:s.who,task:s.task,course:s.course,due:s.due,done:false,via:'from email'});commit('Added to your promises',true,["On Arif's student card",'Due '+dueLow(s.due)+', in People','Nothing was sent to the student'])}}}},
   {sel:'[data-tour="research"]',k:'Protected time',t:'His writing time is guarded, not hoped for',b:'The 2:30 block holds every message until he finishes. If a meeting steals it, Margin moves it to a lighter week instead of deleting it.'},
-  {view:'teaching',sel:'[data-tour="cf1"]',k:'Course file autopilot',t:'Grading quietly builds the accreditation file',b:'BAC needs a course file for every course. Margin assembles it from the portal, Google Classroom and his grading. He only does the two parts that need judgement.',try:{l:'Finish grading Quiz 2',run:()=>{const a=S.assignments.find(x=>x.id==='a1');a.graded=a.total;const cf=S.courseFiles[0];commit('CSE 201 Quiz 2 fully graded',true,['Marks distribution and CLO attainment filled in','Course file now '+Math.round(cfPct(cf)*100)+'%',"Chair's view: CSE 201 grading complete"])}}},
+  {view:'teaching',sel:'[data-tour="cf1"]',k:'Course file autopilot',t:'Grading quietly builds the accreditation file',b:'BAC needs a course file for every course. Margin assembles it from his syllabus, his grading and the portal\'s own Excel exports, with no integration. He only does the two parts that need judgement.',try:{l:'Finish grading Quiz 2',run:()=>{const a=S.assignments.find(x=>x.id==='a1');a.graded=a.total;const cf=S.courseFiles[0];commit('CSE 201 Quiz 2 fully graded',true,['Marks distribution and CLO attainment filled in','Course file now '+Math.round(cfPct(cf)*100)+'%',"Chair's view: CSE 201 grading complete"])}}},
   {role:'chair',view:'dept',sel:'[data-tour="dept"]',k:'Meanwhile, the chair',t:'Prof. Akhter sees it move, without chasing anyone',b:'CSE 201 just reached 100% grading. She sees counts and course-file progress, never his notes, inbox or goals. No teacher is ranked.'},
   {role:'teacher',view:'compass',sel:'[data-tour="promo"]',k:'Why he opens it every day',t:'A visible path to promotion',b:'The university\'s promotion rule becomes his personal plan. Watch what happens when a paper under review gets accepted.',try:{l:'Accept the attrition paper',run:()=>{const p=C().papers.find(x=>x.id==='r2');if(p.stage<4){snap();p.stage=4;commit('Promotion moves forward to '+(readyDate()||'now'),true,['Added to his promotion dossier','Goal "Two indexed papers" updated'])}}}},
   {view:'today',sel:'[data-tour="impact"]',k:'Success in his terms',t:'Margin shows what it gave back',b:'Promises kept, hours saved, research protected. Personal results keep a teacher coming back, even though the university pays.'},
@@ -2571,11 +2581,11 @@ function tourGo(i){
   const card=$('#tourcard'),sp=$('#spot');const n=TOUR.length-1;
   if(st.final){
     sp.style.opacity='0';$('#tourblock').classList.add('dim');card.className='tour final';
-    card.innerHTML=`<div class="k">That's Margin</div><h3 style="font-size:30px">Personal for the teacher. Operational for the university. Paid for by the institution.</h3>
-    <div class="biz"><div><small>Who pays</small><b>The university, per teacher per year</b><span>Annual contracts in taka. Department or university-wide.</span></div>
-    <div><small>How we get in</small><b>A one-department, one-semester pilot</b><span>Done-for-you CSV onboarding. Extended free if weekly use is low after 60 days.</span></div>
-    <div><small>Where it grows</small><b>~116 private universities, then East Africa</b><span>Through Verlocity's ERP clients and network in Bangladesh and Somalia.</span></div></div>
-    <p style="margin-top:16px">Next: 15 to 20 interviews at 3 to 4 universities to validate the frictions, then one signed pilot for next semester.</p>
+    card.innerHTML=`<div class="k">That's Margin</div><h3 style="font-size:30px">Teachers grow. Departments prove what students learned. The university pays.</h3>
+    <div class="biz"><div><small>Who pays</small><b>999 tk per teacher, per month</b><span>Paid by the department or university, per trimester or 9,990 tk a year upfront. Never by the teacher.</span></div>
+    <div><small>How we get in</small><b>One department, one trimester</b><span>Done-for-you setup from syllabi and Excel exports. If 30 of 50 teachers aren't using it weekly, they don't pay.</span></div>
+    <div><small>Where it grows</small><b>UIU's BBA department first</b><span>Then all of UIU, ~116 private universities, and other OBE markets through Verlocity's network.</span></div></div>
+    <p style="margin-top:16px">Next: a one-trimester pilot with UIU's BBA department, 50 teachers, measured on four signals agreed in advance.</p>
     <div class="tour-f"><button type="button" class="btn ghost" data-t="replay">Replay tour</button><span style="flex:1"></span><button type="button" class="btn primary" data-t="explore">Explore the app</button></div>`;
     card.querySelector('[data-t="explore"]').focus();return;
   }
@@ -3398,7 +3408,7 @@ vTeaching=function(){
   return `<div class="view v9p">
   ${hd9('pen',L('Make'),'What do you want to make? Margin drafts, you approve.')}
   <div class="cc4 rise" style="--i:1">${tiles.map(t=>`<button type="button" class="cc ${t.cls}" data-act="${t.act}" ${t.attrs}><div class="top"><span class="ic-b">${ic(t.icon,20)}</span>${t.extra}</div>${t.art}<div class="by">${t.by}</div><b class="t">${t.t}</b></button>`).join('')}</div>
-  <section class="b rise" style="--i:2" aria-labelledby="ip-h"><div class="b-h"><h2 id="ip-h">In progress</h2><span class="b-sub">Collecting itself from the portal and your grading</span></div><ul class="q9-list">${rows.join('')}</ul></section>
+  <section class="b rise" style="--i:2" aria-labelledby="ip-h"><div class="b-h"><h2 id="ip-h">In progress</h2><span class="b-sub">Building itself from your grading and uploads</span></div><ul class="q9-list">${rows.join('')}</ul></section>
   ${handoverCourseHTML()}
   <p class="q9-priv" style="margin-top:16px">${ic('lock',12,2.4)} Drafts stay private until you submit them. <button type="button" class="lnk" data-act="fb-open" style="margin-left:6px">Draft feedback on a mark</button></p>
   </div>`;
@@ -3453,10 +3463,10 @@ const v8feed=feedHTML;
 feedHTML=function(max){return v8feed(S.mode==='full'&&S.view==='today'&&!PHONE()?3:max)};
 
 /* ====================== v10: habit loop (behind one switch) ======================
-   HABIT_LOOP_ENABLED is OFF by default. Turn it on from the Prototype panel ("Habit loop"),
+   HABIT_LOOP_ENABLED is ON by default (since v12). Switch it off or on from the Prototype panel ("Habit loop"),
    or with ?habit=on / ?habit=off in the address. When it is off, nothing below changes the app. */
 const HABIT_KEY='margin.habit';
-const HABIT_LOOP_ENABLED=(()=>{try{const q=new URLSearchParams(location.search).get('habit');if(q==='on'||q==='off')localStorage.setItem(HABIT_KEY,q==='on'?'1':'0');return localStorage.getItem(HABIT_KEY)==='1'}catch(_){return false}})();
+const HABIT_LOOP_ENABLED=(()=>{try{const q=new URLSearchParams(location.search).get('habit');if(q==='on'||q==='off')localStorage.setItem(HABIT_KEY,q==='on'?'1':'0');return localStorage.getItem(HABIT_KEY)!=='0'}catch(_){return true}})();
 /* Minutes each approved item saves. These are estimates, shown as estimates. */
 const HABIT_ESTIMATES={qp:{min:90,label:'question paper'},cf:{min:30,label:'course-file entry'},notice:{min:10,label:'notice summary'},reply:{min:10,label:'email reply'}};
 
@@ -3744,10 +3754,10 @@ document.addEventListener('click',e=>{
 
 /* ====================== v11: growth features (behind one switch) ======================
    Class Insight (course panel → Insight tab) and the trimester teaching report (Grow + a Today card).
-   GROWTH_FEATURES_ENABLED is OFF by default. Turn it on from the Prototype panel ("Growth features"),
+   GROWTH_FEATURES_ENABLED is ON by default (since v12). Switch it off or on from the Prototype panel ("Growth features"),
    or with ?growth=on / ?growth=off. Settings live in lib/growth.js (MarginGrowth.CONFIG). */
 const GROWTH_KEY='margin.growth';
-const GROWTH_FEATURES_ENABLED=(()=>{try{const q=new URLSearchParams(location.search).get('growth');if(q==='on'||q==='off')localStorage.setItem(GROWTH_KEY,q==='on'?'1':'0');return localStorage.getItem(GROWTH_KEY)==='1'&&!!window.MarginGrowth}catch(_){return false}})();
+const GROWTH_FEATURES_ENABLED=(()=>{try{const q=new URLSearchParams(location.search).get('growth');if(q==='on'||q==='off')localStorage.setItem(GROWTH_KEY,q==='on'?'1':'0');return localStorage.getItem(GROWTH_KEY)!=='0'&&!!window.MarginGrowth}catch(_){return !!window.MarginGrowth}})();
 
 const v10drawProto=drawProto;
 drawProto=function(){
@@ -3773,7 +3783,7 @@ function g11(){
     S.g11={fin,marks:{},ins:{},acts:{},actsDone:{},report:{draft:null,eval:null,busy:false},reports:[structuredClone(G.PAST_REPORT)],showCard:false,researchHours:31,
       classes:{'CSE 201':[28,27],'CSE 305':[26,24],'CSE 410':[14,14],'FIN 101':[G.FIN.classes.planned,G.FIN.classes.held]},
       cf:{id:G.FIN.id,course:G.FIN.course,title:G.FIN.title,aid:G.FIN.aid,submitted:false,g11:true,items:[
-        {t:'Course outline',s:'Pulled from the portal',st:'done'},{t:'Lesson plan',s:'Submitted in week 1',st:'done'},{t:'Attendance records',s:'From the portal, updated daily',st:'done'},{t:'CLO to PLO mapping',s:'From the BBA curriculum',st:'done'},
+        {t:'Course outline',s:'From the portal\'s Excel export',st:'done'},{t:'Lesson plan',s:'Submitted in week 1',st:'done'},{t:'Attendance records',s:'From the attendance export, weekly',st:'done'},{t:'CLO to PLO mapping',s:'From the BBA curriculum',st:'done'},
         {t:'Assessment samples',s:'Quiz 1 and midterm, from Margin',st:'done'},{t:'Marks distribution',st:'auto'},{t:'CLO attainment',st:'auto'},
         {t:'Moderated question paper',s:'Midterm, moderated by Dr. Sultana Parvin',st:'done'},{t:'Improvement plan',s:'Added in week 6',st:'done'},{t:'Course evaluation summary',s:'Arrives after the term ends',st:'locked'}]},
       as:{id:G.FIN.aid,course:G.FIN.course,title:'Midterm',total:40,graded:40,mins:4,ret:plus(-3),g11:true}};
@@ -4347,6 +4357,66 @@ document.addEventListener('keydown',e=>{
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(!S.theme)render()});
 matchMedia('(max-width:719px)').addEventListener('change',()=>{lastView=null;render()});
 window.addEventListener('storage',ev=>{if(ev.key===KEY&&FRAME){try{S=JSON.parse(ev.newValue)||S;render()}catch(_){}}});
+
+
+/* ====================== v12: growth message, the Outcome Loop in the tour, AI decision signal ======================
+   1. The guided tour now walks the Outcome Loop: Class Insight on a BBA course, then the trimester teaching report.
+   2. Every decision on an approval card (approve, edit, dismiss) is counted. These counts are the training signal
+      for Margin's own models later. Only counts and card types are kept, never what the teacher wrote. */
+
+/* ---------- 1. tour: the Outcome Loop ---------- */
+if(GROWTH_FEATURES_ENABLED){
+  const at=TOUR.findIndex(x=>x.sel==='[data-tour="cf1"]');
+  if(at>=0)TOUR.splice(at+1,0,
+    {view:'teaching',sel:'#layer .g11-ins',open:()=>{S.g11tab='insight';openCourse('cf-fin')},k:'The Outcome Loop',t:'He sees what his students actually learned',
+     b:'His Principles of Finance quiz and midterm marks became CLO results in seconds. CLO3, evaluating projects with NPV and IRR, is below target. Margin names the hardest question and suggests a practice quiz and a revision class he can approve.'},
+    {view:'compass',sel:'#g11-rep',k:'Grow every trimester',t:'The trimester ends with a teaching report, not a scramble',
+     b:'Margin drafts what went well, where students struggled and three actions for next trimester. He edits and approves; the actions become next trimester\'s goals. It stays private unless he shares it.',
+     try:{l:'Draft my teaching report',run:()=>{const g=$('[data-act="g11-gen"]');g&&g.click()}}});
+}
+const v11tourGo=tourGo;
+tourGo=function(i){
+  v11tourGo(i);
+  const st=TOUR[i];if(!st||!st.open)return;
+  st.open();
+  setTimeout(()=>{const el=$(st.sel);if(el)el.scrollIntoView({block:'start',behavior:'smooth'});setTimeout(placeSpot,380)},120);
+};
+
+/* ---------- 2. AI decision signal ---------- */
+const SIG_KEY='margin.signal';
+var SIG_PILOT={approved:39,edited:13,dismissed:18}; // illustrative pilot totals this term, all teachers, shown on the IQAC view
+function sigLoad(){try{return JSON.parse(localStorage.getItem(SIG_KEY))||{approved:0,edited:0,dismissed:0,log:[]}}catch(_){return {approved:0,edited:0,dismissed:0,log:[]}}}
+var SIG=sigLoad();
+function sigTotals(){const x=SIG||{approved:0,edited:0,dismissed:0};const a=SIG_PILOT.approved+x.approved,e=SIG_PILOT.edited+x.edited,d=SIG_PILOT.dismissed+x.dismissed;return {a,e,d,t:a+e+d}}
+function sigSave(){try{localStorage.setItem(SIG_KEY,JSON.stringify(SIG))}catch(_){}}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.scard .sc-acts button');if(!b)return;
+  const card=b.closest('.scard');const label=(b.textContent||'').trim();
+  const kind=b.classList.contains('ghost')?'dismissed':/^edit\b/i.test(label)?'edited':b.classList.contains('primary')?'approved':null;
+  if(!kind)return;
+  const src=(card.querySelector('.sc-sl')||{}).textContent||'';
+  SIG[kind]++;SIG.log.push({k:kind,type:src.split('·')[0].trim().slice(0,40),at:Date.now()});if(SIG.log.length>200)SIG.log.shift();sigSave();
+},true);
+function sigRow(n,label,total,cls){const pct=total?Math.round(n/total*100):0;return `<div class="sig-row"><span>${label}</span><span class="sig-bar" aria-hidden="true"><i class="${cls}" style="width:${pct}%"></i></span><b class="num">${pct}%</b></div>`}
+function sigCard(){
+  const Q=sigTotals(),A=Q.a,E=Q.e,D=Q.d,T=Q.t;
+  return `<section class="card rise sig-card" style="--i:2;margin-top:20px" id="sig-card"><div class="card-h"><h2>AI quality, from teachers' decisions</h2><span class="card-sub" style="margin:0">${T} decisions this term</span></div>
+  <p class="card-sub">Every AI draft is approved, edited or dismissed by a teacher. Margin counts those decisions; it never keeps what teachers wrote. The counts tell us where the AI is good enough, and become training data for Margin's own models.</p>
+  ${sigRow(A,'Approved as drafted',T,'ok')}${sigRow(E,'Edited, then approved',T,'mid')}${sigRow(D,'Dismissed',T,'low')}
+  <p class="row-s" style="margin-top:10px">Pilot target: 70% approved with light or no edits. ${Math.round((A+E)/T*100)}% so far.${SIG.approved+SIG.edited+SIG.dismissed?` Includes ${SIG.approved+SIG.edited+SIG.dismissed} from this demo.`:''}</p></section>`;
+}
+const v11render=render;
+render=function(){
+  const r=v11render.apply(this,arguments);
+  if(S.view==='admin'&&!$('#sig-card')){const sc=$('[data-tour="score"]');if(sc)sc.insertAdjacentHTML('afterend',sigCard())}
+  return r;
+};
+const v11drawProto=drawProto;
+drawProto=function(){
+  v11drawProto();
+  if(FRAME||!protoOpen)return;const m=$('#proto .proto-m');if(!m)return;
+  m.insertAdjacentHTML('beforeend',`<h4>AI decisions in this demo</h4><p class="row-s" style="margin:0">${SIG.approved} approved · ${SIG.edited} edited · ${SIG.dismissed} dismissed. Shown to IQAC as AI quality.</p>`);
+};
 
 routeFromHash();
 render();

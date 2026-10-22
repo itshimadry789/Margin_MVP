@@ -217,6 +217,18 @@ mark{background:linear-gradient(transparent 55%,var(--hl) 55%,var(--hl) 92%,tran
 .check input{width:22px;height:22px;accent-color:var(--ok)}
 .saved{font-size:14px;color:var(--ok);font-weight:600}
 .ask{background:var(--hl-soft);border-radius:18px;padding:16px 18px;margin-top:14px;font-size:15px}
+.clo-bars{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+.clo-row{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 64px;gap:12px;align-items:center}
+.clo-k{display:flex;flex-direction:column;min-width:0}.clo-k small{font-size:12.5px;color:var(--ink-3);line-height:1.3}
+.clo-bar{position:relative;height:12px;border-radius:6px;background:var(--line)}
+.clo-bar i{position:absolute;inset:0 auto 0 0;border-radius:6px;background:var(--ok)}
+.clo-bar i.low{background:var(--warn)}
+.clo-bar em{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink-2);border-radius:1px}
+.clo-v{font-weight:700;text-align:right}.clo-v.ok{color:var(--ok)}.clo-v.low{color:var(--warn)}
+.ins-card{margin-top:16px;border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.ins-card span{font-size:14.5px;color:var(--ink-2)}
+.ins-card.done{background:var(--ok-soft);border-color:transparent}
+@media (max-width:640px){.clo-row{grid-template-columns:minmax(0,1fr) 64px}.clo-bar{grid-column:1/-1;grid-row:2}}
 .ask b{display:block;font:500 18px var(--serif);margin-bottom:4px}
 
 .toast{position:fixed;left:50%;top:calc(70px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:30;background:var(--primary);color:var(--on-primary);padding:12px 18px;border-radius:14px;font-size:14.5px;font-weight:500;box-shadow:var(--shadow);animation:pop .25s;max-width:calc(100% - 32px)}
@@ -310,12 +322,13 @@ if(params.get('theme')==='dark'||params.get('theme')==='light')document.document
 
 /* ---------- headline variants ---------- */
 const HEADLINES={
+  growth:'Teach better. Grow faster.',
   coursefile:'Your course file builds itself while you teach.',
   career:'Finish the papers your promotion needs, without giving up your evenings.',
   promises:'Never drop a promise to a student again.'};
-let variant=(params.get('headline')||'coursefile').toLowerCase();
-if(!HEADLINES[variant])variant='coursefile';
-const ORDER={coursefile:['paper','promises','career','colleague'],career:['career','promises','paper','colleague'],promises:['promises','paper','career','colleague']}[variant];
+let variant=(params.get('headline')||'growth').toLowerCase();
+if(!HEADLINES[variant])variant='growth';
+const ORDER={growth:['paper','insight','career','promises','colleague'],coursefile:['paper','insight','promises','career','colleague'],career:['career','paper','insight','promises','colleague'],promises:['promises','paper','insight','career','colleague']}[variant];
 const STEPS=['before',...ORDER,'numbers'];
 
 /* ---------- dates ---------- */
@@ -411,7 +424,7 @@ async function extract(text){
 }
 
 /* ---------- state (session only; pasted text is never stored) ---------- */
-const st={qp:null,qpBusy:false,qpFiled:false,collab:null,chat:false,plan:null,i:0,beat:{},paste:'',sample:-1,results:null,source:null,busy:false,added:0,cfDone:false,plan:'',paperAccepted:false,calc:{hours:12,courses:4,terms:3,research:4},fb:{use:null,missing:'',name:'',uni:'',pilot:false,saved:false}};
+const st={qp:null,qpBusy:false,qpFiled:false,collab:null,chat:false,plan:null,i:0,beat:{},paste:'',sample:-1,results:null,source:null,busy:false,added:0,cfDone:false,plan:'',paperAccepted:false,calc:{hours:12,courses:4,terms:3,research:4},quiz:false,fb:{use:null,missing:'',name:'',uni:'',pilot:false,saved:false}};
 
 /* ---------- render ---------- */
 function progress(){
@@ -427,6 +440,7 @@ function nextLabel(){const k=STEPS[st.i];
   if(k==='coursefile'&&!st.cfDone)return 'Submit course file';
   if(k==='paper'&&!st.qp)return st.qpBusy?'Drafting…':'Draft the paper';
   if(k==='paper'&&!st.qpFiled)return 'Moderate and file';
+  if(k==='insight'&&!st.quiz)return 'Approve the practice quiz';
   if(k==='colleague'&&!st.chat)return 'Suggest a coffee chat';
   if(k==='career'&&!st.paperAccepted)return 'Accept the paper';
   if(st.i===STEPS.length-1)return st.fb.saved?'Done':'Save answer';
@@ -582,7 +596,7 @@ async function draftPaper(){
 }
 async function filePaper(){st.qpFiled=true;render();toast('Approved and filed in the CSE 201 course file.')}
 VIEWS.paper=()=>{const q=st.qp;const qs=q?q.output.sets.A:[];const clos=new Set(qs.map(x=>x.clo));
-return `<p class="kicker">The paperwork disappears</p>
+return `<p class="kicker">Manage your teaching</p>
 <h1 class="h" id="h" tabindex="-1">From course outline to a print-ready question paper.</h1>
 <div class="grid2">
   <div class="card"><div style="font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--ink-3)">CSE 201 · DATA STRUCTURES · COURSE OUTLINE</div>
@@ -597,6 +611,21 @@ return `<p class="kicker">The paperwork disappears</p>
     :`<div class="pp-empty">${st.qpBusy?'<span class="dots"><i></i><i></i><i></i></span> Drafting two sets with answer keys and rubrics…':'Press Next: Margin drafts two equivalent sets, tagged by CLO and Bloom’s level, with answer keys and rubrics.'}</div>`}
   </div>
 </div>`};
+/* insight: the Outcome Loop, marks -> what students learned -> a fix */
+const INSIGHT=[['CLO1',82],['CLO2',64],['CLO3',41],['CLO4',71]];
+VIEWS.insight=()=>`<p class="kicker">See what students learned</p>
+<h1 class="h" id="h" tabindex="-1">The midterm is marked. Which outcomes did students actually reach?</h1>
+<div class="grid2">
+  <div class="card"><div style="font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--ink-3)">CSE 201 · MIDTERM · 46 STUDENTS · CLO ATTAINMENT</div>
+    <div class="clo-bars">${INSIGHT.map(([k,v])=>{const ok=v>=60;const d=(OUTLINE.find(o=>o[0]===k)||[])[1]||'';return `<div class="clo-row"><span class="clo-k"><b>${k}</b><small>${esc(d)}</small></span><span class="clo-bar" aria-hidden="true"><i class="${ok?'':'low'}" style="width:${v}%"></i><em style="left:60%"></em></span><span class="clo-v num ${ok?'ok':'low'}">${v}% ${ok?'✓':'✗'}</span></div>`}).join('')}</div>
+    <p style="font-size:13.5px;color:var(--ink-3);margin-top:12px">A student reaches a CLO at 50% of its marks. A CLO is achieved when 60% of students reach it (the line). Marks come from the portal's Excel export; every question already carries its CLO.</p></div>
+  <div class="card ins-ai" aria-live="polite">
+    <span class="tag warn">CLO3 is the weak spot</span>
+    <p style="font-size:clamp(17px,1.6vw,19px);margin-top:10px">Only <b>41%</b> of students reached CLO3, <i>apply trees and hashing</i>. The hardest question was Q3, the BST insertion, which averaged 38%. The other three CLOs are achieved.</p>
+    <div class="ins-card ${st.quiz?'done':''}"><b>${st.quiz?'✓ Approved':'Suggested'} · 10-question practice quiz on CLO3</b><span>From your question bank, with an answer key. Students practise before the final, and it goes into the course file's improvement plan.</span></div>
+    <p style="font-size:13.5px;color:var(--ink-3);margin-top:12px">${st.quiz?'At the end of the trimester this result goes into your teaching report, and next trimester starts better than this one.':'One tap to approve. Nothing reaches students until you say so.'}</p>
+  </div>
+</div>`;
 /* colleague */
 const SAMPLE_COLLAB={source:'offline',output:{matches:[{colleague:{name:'Dr. Sabrina Akter',title:'Associate Professor',interests:['Bangla NLP','Speech recognition','Low-resource languages']},overlap:'You both work on Bangla language technology.',idea:'Combine your OCR pipeline with her Bangla language model to correct recognition errors: a short paper and a shared thesis student.'}]}};
 VIEWS.colleague=()=>{const m=st.collab&&st.collab.output.matches[0];const c=m&&m.colleague;
@@ -641,7 +670,7 @@ VIEWS.numbers=()=>{const r=calc();const f=st.fb;const n=savedCount();return `<p 
     <label class="sr" for="missing">What's missing?</label><textarea id="missing" style="margin-top:12px" placeholder="What's missing? What would stop you?">${esc(f.missing)}</textarea>
     <div class="fb-row"><label class="sr" for="fbname">Name and role</label><input id="fbname" placeholder="Name and role (optional)" value="${esc(f.name)}"><label class="sr" for="fbuni">University and department</label><input id="fbuni" placeholder="University, department" value="${esc(f.uni)}"></div>
     <label class="check"><input type="checkbox" id="fbpilot" ${f.pilot?'checked':''}> I'd like to talk about a pilot in my department</label>
-    <div class="ask"><b>The pilot: one department, one semester, free.</b>We import your calendar, allocations and rosters from CSV and run a faculty workshop. If most teachers aren't using it weekly after 60 days, we extend it free.</div>
+    <div class="ask"><b>The pilot: one department, one trimester.</b>We set it up for you from syllabi and the portal's Excel exports, and run a faculty workshop. Then 999 tk per teacher a month, paid by the department or university. If 30 of 50 teachers aren't using it weekly, you don't pay.</div>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px"><button type="button" class="btn primary" id="savefb">${f.saved?'Saved ✓':'Save answer'}</button><button type="button" class="btn" id="exportfb" ${n?'':'disabled'}>Export ${n} as JSON</button><a class="btn ghost" href="${SERVED?'/pitch/one-pager':'one-pager.html'}${location.search}" target="_blank" rel="noopener">One-pager</a></div>
   </div>
 </div>`};
@@ -666,6 +695,7 @@ async function next(){
   if(k==='coursefile'&&!st.cfDone){await submitCF();return}
   if(k==='paper'&&!st.qp){await draftPaper();return}
   if(k==='paper'&&!st.qpFiled){await filePaper();return}
+  if(k==='insight'&&!st.quiz){st.quiz=true;render();toast('Practice quiz on CLO3 approved. Added to the improvement plan in the course file.');return}
   if(k==='colleague'&&!st.chat){st.chat=true;render();toast('Added to your promises. Nothing was sent.');return}
   if(k==='career'&&!st.paperAccepted){await acceptPaper();return}
   if(st.i===STEPS.length-1){if(!st.fb.saved)saveFeedback();else location.href=APP_URL;return}
