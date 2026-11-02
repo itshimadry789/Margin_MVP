@@ -51,7 +51,7 @@
 .cx-col-h{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);padding:2px 4px}
 .cx-col-h .num{background:var(--surface);border-radius:99px;padding:1px 8px;letter-spacing:0}
 .cx-pc{background:var(--surface);border-radius:16px;padding:10px 12px;display:flex;flex-direction:column;gap:5px;border:1.5px solid transparent}
-.cx-pc.stall{border-color:var(--p-orange)}
+.cx-pc.next{border-color:var(--line-2)}
 .cx-pc.pub{opacity:.85}
 .cx-pc-t{font-size:14px;line-height:1.3;letter-spacing:-.01em}
 .cx-pc-m{font-size:12px;color:var(--ink-3)}
@@ -295,3 +295,12 @@
   .cx .dhead-r{flex-wrap:nowrap;gap:6px;width:100%}
   .cx .cx-priv{font-size:11.5px;padding:3px 8px;flex:1;min-width:0}
 }
+
+/* v13.2 (Intent evaluation): one nav row on phones, visible tools list */
+.cx-back{display:flex;align-items:center;gap:10px;margin:0 0 14px;flex-wrap:wrap}
+.cx-back b{display:inline-flex;align-items:center;gap:6px;font-size:15px}
+.cx-tl{display:flex;flex-direction:column;gap:6px}
+.cx-tl button{display:flex;align-items:center;gap:10px;min-height:48px;padding:0 14px;border-radius:16px;background:var(--frame);border:1px solid var(--line);font-weight:700;font-size:14px;text-align:left;color:var(--ink)}
+.cx-tl button span{flex:1}
+.cx-tl button svg:last-child{color:var(--ink-3)}
+.cx-toolsrow{margin-top:20px}

@@ -4,6 +4,11 @@ The teacher app (`index.html`, served at `/` and `/app`), the pitch (`/pitch`) a
 
 This branch holds the frontend only. The AI and department API (`/api/*`) is not in this repository; `vercel.json` forwards `/api/*` to the live production deployment so previews use the real AI.
 
+## What changed in v13.1 and v13.2: calmer app (UX audits)
+- Evaluated with the Intent plugin: see `evaluation-margin.md` (findings), `context-margin.md` (project context) and `decisions.md` (defaults chosen).
+- Fixed: drafts signed with the wrong teacher's name; AI-decision counts are now opt-in from the privacy sheet ("What does your university see?"); one navigation row on phones, with Compass home as the hub; neutral copy instead of "X is waiting" and "stalled"; one count per list; estimates labelled; tab bar labels and a compass icon for Grow; 44px touch targets and darker meta text on phones; "Trimester map"; the course file opens at "Needs you"; Escape exits the Compass demo.
+- Still open: full Bangla translation (the switch is marked beta), the desktop Today progress meter vs the Calm/Full switch, and the Grow vs Compass name.
+
 ## What changed in v13: Compass rebuilt
 - Compass (the Grow tab) now does research work. Margin finds, formats, checks and drafts responses; the teacher approves. It never writes the research.
 - Six screens: Compass home (promotion gap, ETA, pipeline board, research time, action cards), Journal finder (with a hijacked-journal warning), Manuscript formatter, Reviewer response, Teaching → research ideas, Friday review.

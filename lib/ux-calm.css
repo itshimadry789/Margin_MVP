@@ -14,3 +14,22 @@
   .cc4 .cc .by{padding-top:28px;padding-right:50px;font-size:12px;max-width:100%}
   .cc4 .cc b.t{font-size:16.5px;line-height:1.15;overflow-wrap:anywhere;hyphens:auto}
 }
+
+/* v13.2 (Intent evaluation) */
+@media (max-width:719px){
+  /* Touch targets: shared small buttons and link pills reach 44px on phones. */
+  .btn.sm,.lnk{min-height:44px}
+  /* Tab bar: every tab shows its name, not only the current one. */
+  .tabs.fl button{flex:1!important;flex-direction:column;gap:1px;height:56px;min-height:56px;font-size:11px}
+  .tabs.fl .tb-l{display:block!important;font-size:11px;line-height:1.1}
+  .tabs.fl .tb-i svg{width:20px;height:20px}
+}
+/* Desktop Today: the drafts strip becomes one slim row, so the purple task card is the only hero. */
+@media (min-width:720px){
+  .h10-ready{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 12px}
+  .h10-ready .h10-r-h{flex:none;margin:0}
+  .h10-ready .h10-r-h .b-sub{display:none}
+  .h10-ready h2{font-size:15px!important}
+  .h10-ready .h10-ic{width:32px;height:32px}
+  .h10-ready .h10-r-l{margin:0!important;flex:1;min-width:0}
+}
