@@ -1,0 +1,39 @@
+/* v13.1 UX audit fixes outside Compass: phone-width density on People and Make.
+   Only phone widths are touched; desktop layouts are unchanged. */
+@media (max-width:719px){
+  /* People: four big stat tiles took the whole first screen. Make them one compact row so the list starts above the fold. */
+  .p9-tiles{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important;margin-bottom:14px}
+  .p9-tiles .st4{min-height:0;padding:10px 6px;border-radius:18px;align-items:center;justify-content:center;gap:2px}
+  .p9-tiles .st4 .ic-c{display:none}
+  .p9-tiles .st4 .num{position:static;order:-1;font-size:24px}
+  .p9-tiles .st4 .lbl{font-size:11.5px;line-height:1.2;text-align:center}
+
+  /* Make: tile titles and meta lines ran into the illustrations at 390px. */
+  .cc4 .cc{min-height:168px;padding:14px}
+  .cc4 .cc .line{width:64px;height:64px;top:54px;right:4px;opacity:.5}
+  .cc4 .cc .by{padding-top:28px;padding-right:50px;font-size:12px;max-width:100%}
+  .cc4 .cc b.t{font-size:16.5px;line-height:1.15;overflow-wrap:anywhere;hyphens:auto}
+}
+
+/* v13.2 (Intent evaluation) */
+@media (max-width:719px){
+  /* Touch targets: shared small buttons and link pills reach 44px on phones. */
+  .btn.sm,.lnk{min-height:44px}
+  /* Tab bar: every tab shows its name, not only the current one. */
+  .tabs.fl button{flex:1!important;flex-direction:column;gap:1px;height:56px;min-height:56px;font-size:11px}
+  .tabs.fl .tb-l{display:block!important;font-size:11px;line-height:1.1}
+  .tabs.fl .tb-i svg{width:20px;height:20px}
+}
+/* Desktop Today: the drafts strip becomes one slim row, so the purple task card is the only hero. */
+@media (min-width:720px){
+  .h10-ready{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 12px}
+  .h10-ready .h10-r-h{flex:none;margin:0}
+  .h10-ready .h10-r-h .b-sub{display:none}
+  .h10-ready h2{font-size:15px!important}
+  .h10-ready .h10-ic{width:32px;height:32px}
+  .h10-ready .h10-r-l{margin:0!important;flex:1;min-width:0}
+}
+@media (max-width:719px){
+  /* People: segmented control and filter chips reach 44px. Student-name links stay inline text links (the WCAG 2.5.5 inline exception). */
+  .modeseg button,.fbtn{min-height:44px}
+}

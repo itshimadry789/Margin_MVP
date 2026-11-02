@@ -486,7 +486,7 @@ body.touring .proto{display:none}
 :root{
   --serif:'Manrope','Noto Sans Bengali',system-ui,sans-serif;--sans:'Manrope','Noto Sans Bengali',system-ui,-apple-system,'Segoe UI',sans-serif;
   --page:#DCE4FB;--frame:#FFFFFF;--surface:#F5F5F7;--surface-2:#FFFFFF;--sunk:#EBEBF0;--line:#E6E6EC;--line-2:#D3D3DB;
-  --ink:#0F0F12;--ink-2:#4A4A55;--ink-3:#6B6B77;--primary:#111114;--on-primary:#FFFFFF;
+  --ink:#0F0F12;--ink-2:#4A4A55;--ink-3:#5E5E6A;--primary:#111114;--on-primary:#FFFFFF;
   --accent:#F2C14E;--accent-ink:#111114;--hl:#FBE5A0;--hl-soft:#FDF4D9;
   --p-yellow:#F2C14E;--p-blue:#B3C6FB;--p-blue-2:#9CB3F8;--p-pink:#EBA6F6;--p-orange:#F7983A;--on-pastel:#111114;
   --ok:#22744A;--ok-soft:#DDF1E5;--warn:#C2410C;--warn-soft:#FDE6D7;--cool:#3150C8;--cool-soft:#E4EAFD;
@@ -1587,6 +1587,7 @@ button.r9-b:hover{background:var(--sunk)}
 @media (max-width:719px){.sig-row{grid-template-columns:minmax(0,1fr) 48px}.sig-bar{grid-column:1/-1;grid-row:2}}
 </style>
 <link rel="stylesheet" href="lib/compass.css">
+<link rel="stylesheet" href="lib/ux-calm.css">
 </head>
 <body>
 <div id="app"></div>
@@ -1792,7 +1793,7 @@ function cfNeeds(c){return c.submitted?0:c.items.filter(i=>i.st==='needs').lengt
 function ring(p,size,stroke,label,cls){const r=(size-stroke)/2,c=2*Math.PI*r;return `<div class="ring ${cls||''}" style="width:${size}px;height:${size}px"><svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" aria-hidden="true"><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--sunk)" stroke-width="${stroke}"/><circle class="ring-p" cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--accent)" stroke-width="${stroke}" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-p)}" transform="rotate(-90 ${size/2} ${size/2})" style="transition:stroke-dashoffset .9s cubic-bezier(.2,.8,.2,1)"/></svg>${label}</div>`}
 
 /* ---------- shell ---------- */
-const NAV=[['today','Today','today'],['teaching','Make','pen'],['compass','Grow','spark'],['people','People','people']];
+const NAV=[['today','Today','today'],['teaching','Make','pen'],['compass','Grow','compass'],['people','People','people']];
 function counts(){return{admin:0,dept:0,today:owedP().length+needs().length+sugs().length,teaching:S.courseFiles.reduce((a,c)=>a+cfNeeds(c),0),people:openP().length,compass:0}}
 function shell(){
   const n=counts(),chair=S.role!=='teacher';
@@ -1807,7 +1808,7 @@ function shell(){
     <div class="topr">
       ${chair?`<span class="rolechip">${S.role==='chair'?'Chair view':'University view'}</span>`:`<button type="button" class="rbtn" data-act="palette" aria-label="Search or capture (Ctrl K)">${ic('search',19)}</button>
       <button type="button" class="rbtn hide-s" data-act="digest" aria-label="Digest, ${dg} held">${ic('bell',19)}${dg?`<span class="bdg num">${dg}</span>`:''}</button>
-      <button type="button" class="rbtn hide-s" data-act="lang" aria-label="${S.lang==='bn'?'Switch to English':'বাংলায় দেখুন'}">${S.lang==='bn'?'EN':'বাং'}</button>`}
+      <button type="button" class="rbtn hide-s" data-act="lang" aria-label="${S.lang==='bn'?'Switch to English':'বাংলায় দেখুন'}">${S.lang==='bn'?'EN':'বাং β'}</button>`}
       <button type="button" class="rbtn" data-act="theme" aria-label="Switch light or dark theme">${ic(isDark()?'sun':'moon',19)}</button>
       <span class="rbtn me-av" title="${esc(who.n)}, ${esc(who.s)}">${av(who.n)}</span>
     </div>
@@ -1818,7 +1819,7 @@ function shell(){
     ${chair?`<button type="button" class="mh-btn" data-act="theme" aria-label="Switch light or dark theme">${ic(isDark()?'sun':'moon',19)}</button>`:`<button type="button" class="mh-btn" data-act="palette" aria-label="Search or capture">${ic('search',19)}</button>`}
   </header>
   <main class="main" id="main"></main>
-  ${chair?'':`<nav class="tabs fl" aria-label="Main">${tab('today',L('Today'),'today',n.today)}${tab('teaching',L('Make'),'pen',n.teaching)}${tab('compass',L('Grow'),'spark')}${tab('people',L('People'),'people')}</nav>`}
+  ${chair?'':`<nav class="tabs fl" aria-label="Main">${tab('today',L('Today'),'today',n.today)}${tab('teaching',L('Make'),'pen',n.teaching)}${tab('compass',L('Grow'),'compass')}${tab('people',L('People'),'people')}</nav>`}
   </div>`;
 }
 function tab(k,l,i,n){const on=S.view===k||(k==='teaching'&&S.view==='qp');return `<button type="button" data-act="go" data-v="${k}" ${on?'aria-current="page"':''} aria-label="${esc(l)}${n?', '+n+' items':''}"><span class="tb-i">${ic(i,21)}</span><span class="tb-l">${l}</span>${n&&!on?'<span class="dotn" aria-hidden="true"></span>':''}</button>`}
@@ -2077,7 +2078,7 @@ function openMe(){
   sheet(`<div class="sheet-h"><div style="display:flex;gap:14px;align-items:center">${av(who[0],'lg')}<div><h2 id="sh-t">${esc(who[0])}</h2><div class="row-s">${esc(who[1])} · ${esc(S.uni)}</div></div></div><button type="button" class="icon-btn" data-act="close" aria-label="Close">${ic('x',20)}</button></div>
   <div class="melist">
     <button type="button" data-act="theme">${ic(isDark()?'sun':'moon',18)}<span>${isDark()?'Light mode':'Dark mode'}</span></button>
-    <button type="button" data-act="lang">${ic('dots',18)}<span>${S.lang==='bn'?'Switch to English':'বাংলায় দেখুন (Bangla)'}</span></button>
+    <button type="button" data-act="lang">${ic('dots',18)}<span>${S.lang==='bn'?'Switch to English':'বাংলায় দেখুন (Bangla, beta: menus and dates)'}</span></button>
     <button type="button" data-act="digest">${ic('inbox',18)}<span>Digest and noise rules</span><em class="num">${digest().length}</em></button>
     <button type="button" data-act="lens">${ic('lock',18)}<span>What my university sees</span></button>
     <button type="button" data-act="weeksum">${ic('spark',18)}<span>This week with Margin</span></button>
@@ -2095,7 +2096,7 @@ function openMe(){
 /* ---------- next best step ---------- */
 function nextStep(){
   const lateP=openP().filter(p=>dfrom(p.due)<0).sort((a,b)=>a.due<b.due?-1:1)[0];
-  if(lateP)return{kind:'p',p:lateP,why:`It's ${dueLabel(lateP.due)}${lateP.who&&lateP.who!=='For you'?` and ${lateP.who.split(' ')[0]} is waiting`:''}.`};
+  if(lateP)return{kind:'p',p:lateP,why:`${dueLabel(lateP.due)}${lateP.who&&lateP.who!=='For you'?` · ${S.lang==='bn'?lateP.who.split(' ')[0]+'-এর জন্য':'for '+lateP.who.split(' ')[0]}`:''}`};
   const r=S.sched.find(e=>e.k==='research'),blk=C().blocks.find(b=>b.today),nm=nowMin();
   if(r&&!(blk&&blk.done)&&nm>=r.s-30&&nm<r.e)return{kind:'research',r,why:nm<r.s?`Your protected writing block starts at ${fmtMin(r.s)}.`:'Your protected writing block is happening now.'};
   const todayP=openP().filter(p=>dfrom(p.due)===0)[0];
@@ -2404,6 +2405,8 @@ function openLens(){
     ${a.map(x=>{const c=S.courseFiles.find(k=>k.aid===x.id);return `<li>${esc(x.course)}: ${x.graded} of ${x.total} graded<small>Counts only, never marks. Course file ${Math.round(cfPct(c)*100)}%</small></li>`}).join('')}
     <li>Allocations and calendar<small>Already theirs</small></li>
     <li><span class="redact" style="width:90px"></span><small>Everything else</small></li></ul></div></div>
+  <div class="rule ai-consent" style="margin-top:16px"><div><div class="row-t">Help improve Margin's drafts</div><div class="row-s">Share how often you approve, edit or dismiss AI drafts. Only the counts, never what you wrote. They show IQAC how good the drafts are and help train Margin's own models. Off until you turn it on.</div></div>
+    <button type="button" class="switch" role="switch" aria-checked="${!!S.aiShare}" data-act="ai-share" aria-label="Share approve, edit and dismiss counts"></button></div>
   <div class="row-acts" style="margin-top:16px"><button type="button" class="btn" data-act="lens-chair">${ic('dept',16)} See the chair's view yourself</button></div>`,'lens');
 }
 function openDossier(){
@@ -3043,7 +3046,7 @@ function q9Items(){
   if(r&&!(blk&&blk.done)&&nm>=r.s-30&&nm<r.e)out.push({key:'research',rowId:'research',kind:'research',icon:'pen',color:'var(--p-yellow)',title:'Research writing',who:C().papers[0].t,due:nm<r.s?fmtMin(r.s):'Now',detail:'',
     why:nm<r.s?`Your protected writing block starts at ${fmtMin(r.s)}.`:'Your protected writing block is happening now.',primary:{label:'Start focus',act:'focus',icon:'focus'},more:[{label:'Move to later this week',act:'book-block'}],mins:0,badge:''});
   owedP().forEach(p=>{const n=dfrom(p.due);out.push({key:p.id,rowId:p.id,kind:'p',icon:p.kind==='letter'?'letter':'check',color:'var(--p-pink)',title:p.task,who:p.who||'For you',sid:p.sid,due:dueLabel(p.due),late:n<0,detail:'',
-    why:n<0?`It's ${dueLabel(p.due)}${p.who&&p.who!=='For you'?` and ${p.who.split(' ')[0]} is waiting`:''}.`:'Due today.',
+    why:n<0?`${dueLabel(p.due)}${p.who&&p.who!=='For you'?` · ${S.lang==='bn'?p.who.split(' ')[0]+'-এর জন্য':'for '+p.who.split(' ')[0]}`:''}`:'Due today.',
     primary:{label:'Done',act:'done-p',attrs:`data-id="${p.id}"`,icon:'check'},more:[{label:'Move to tomorrow',act:'snz',attrs:`data-id="${p.id}"`}],mins:2,badge:''})});
   needs().filter(m=>m.act!=='promise').forEach(m=>out.push({key:m.id,rowId:m.id,kind:'m',icon:'mail',color:'var(--p-blue)',title:m.subj,who:m.from,sid:m.sid,due:'',
     detail:`<p class="q9-p">${esc(m.body)}</p>`,why:'A message that needs a decision from you.',
@@ -3093,7 +3096,7 @@ function q9DiscHTML(){
 function q9Clear(){
   const im=impact();const blk=C().blocks.find(b=>b.today);
   return `<section class="ns clear q9-clear rise" style="--i:1" data-tour="impact" aria-labelledby="q9c"><div class="ns-k">${ic('check',14,2.6)} All clear</div><h2 class="ns-t" id="q9c">You're clear for today.</h2>
-    <div class="q9-stats"><div><b class="num">${im.kept}</b><span>promises kept this week</span></div><div><b class="num">${fmt(im.saved)} h</b><span>given back this week</span></div><div><b class="num">${fmt(hoursDone())}/4 h</b><span>writing this week</span></div></div>
+    <div class="q9-stats"><div><b class="num">${im.kept}</b><span>promises kept this week</span></div><div><b class="num">${fmt(im.saved)} h</b><span>given back this week (est.)</span></div><div><b class="num">${fmt(hoursDone())}/4 h</b><span>writing this week</span></div></div>
     <div class="ns-acts">${blk&&!blk.done?`<button type="button" class="btn ns-main" data-act="focus">${ic('focus',16)} Start your writing block</button>`:`<button type="button" class="btn ns-main" data-act="plan-tmr">${ic('cal',16)} Look at tomorrow</button>`}</div></section>
     ${q9DiscHTML()}`;
 }
@@ -3110,7 +3113,7 @@ vToday=function(){
     <p class="lede-s">${n?`Your morning: <b>${n} thing${n>1?'s':''}</b>, about ${Math.max(1,mins)} minute${Math.max(1,mins)>1?'s':''}.`:'Nothing left for today.'}</p>
     <div class="q9-bar" role="progressbar" aria-label="Today's progress" aria-valuenow="${Math.round(prog*100)}" aria-valuemin="0" aria-valuemax="100"><i style="width:${prog*100}%"></i></div></div>${MODESEG9()}</header>`;
   const rest=items.slice(1),shown=rest.slice(0,S.owAll?40:5);
-  const left=n?`${q9Hero(items[0])}${shown.length?`<ul class="q9-list rise" style="--i:2" aria-label="After that">${shown.map(q9Row).join('')}</ul>`:''}${rest.length>shown.length?`<button type="button" class="lnk ow-more" data-act="ow-all">Show ${rest.length-shown.length} more</button>`:''}`:q9Clear();
+  const left=n?`${q9Hero(items[0])}${shown.length?`<ul class="q9-list rise" style="--i:2" aria-label="After that">${shown.map(q9Row).join('')}</ul>`:''}${rest.length>shown.length?`<button type="button" class="lnk ow-more" data-act="ow-all">Show all ${rest.length}</button>`:''}`:q9Clear();
   return `<div class="view dash calm">${head}<div class="calm-grid"><div class="bcol">${left}</div><div class="bcol">${q9Up()}<div data-tour="research">${compassLine()}</div><p class="q9-priv">${ic('lock',12,2.4)} Everything here is private to you. Shared items are marked.</p></div></div></div>`;
 };
 
@@ -3121,7 +3124,7 @@ function q9Phone(items,n,mins,prog){
       ${q9Menu(h,true)}<div class="q9-bar on-hero" aria-hidden="true"><i style="width:${prog*100}%"></i></div>${RINGS}</section>`
     :`<section class="mhero clear rise" style="--i:0" data-tour="impact"><span class="mh-tag">${ic('check',13,2.6)} All clear</span><h1 class="mh-t">You're clear for today.</h1><p class="mh-s">${impact().kept} promises kept · ${fmt(impact().saved)} h given back this week</p>${RINGS}</section>`;
   const rest=items.slice(1),shown=rest.slice(0,S.owAll?40:3);
-  const list=shown.length?`<ul class="q9-list rise" style="--i:1" aria-label="After that">${shown.map(q9Row).join('')}</ul>${rest.length>shown.length?`<button type="button" class="lnk ow-more" data-act="ow-all">Show ${rest.length-shown.length} more</button>`:''}`:'';
+  const list=shown.length?`<ul class="q9-list rise" style="--i:1" aria-label="After that">${shown.map(q9Row).join('')}</ul>${rest.length>shown.length?`<button type="button" class="lnk ow-more" data-act="ow-all">Show all ${rest.length}</button>`:''}`:'';
   const ag=agenda(0),nm=nowMin(),nonR=ag.filter(e=>e.k!=='research');
   const a=nonR.find(e=>nm>=e.s&&nm<e.e)||nonR.find(e=>e.s>nm)||null;const r=ag.find(e=>e.k==='research');const blk=C().blocks.find(b=>b.today);
   const yellow=a?`<button type="button" class="mc mc-y rise" style="--i:2" data-act="dayview"><span class="mc-tag">${nm>=a.s&&nm<a.e?'Now':'Up next'}</span><b class="mc-t">${esc(a.t)}</b>${a.s!=null?`<span class="mc-l num">${rng2(a.s,a.e)}</span>`:''}<span class="mc-l">${esc(a.sub)}</span></button>`
@@ -3155,7 +3158,7 @@ shell=function(){
     ${chair?'<span></span>':`<button type="button" class="mh-btn" data-act="palette" aria-label="Ask Margin">${ic('search',19)}</button>`}
   </header>
   <main class="main" id="main"></main>
-  ${chair?'':`<nav class="tabs fl" aria-label="Main">${tab('today',L('Today'),'today',n)}${tab('teaching',L('Make'),'pen')}${tab('compass',L('Grow'),'spark')}${tab('people',L('People'),'people')}</nav>`}
+  ${chair?'':`<nav class="tabs fl" aria-label="Main">${tab('today',L('Today'),'today',n)}${tab('teaching',L('Make'),'pen')}${tab('compass',L('Grow'),'compass')}${tab('people',L('People'),'people')}</nav>`}
   </div>`;
 };
 
@@ -3168,7 +3171,7 @@ openMe=function(){
     ${t?`<h4>Everything in Margin</h4>
     <button type="button" data-act="more-go" data-v="teaching">${ic('teaching',18)}<span>Course files and grading</span></button>
     <button type="button" data-act="letters">${ic('mail',18)}<span>Letters</span></button>
-    <button type="button" data-act="more-go" data-v="compass">${ic('cal',18)}<span>Semester map</span></button>
+    <button type="button" data-act="more-go" data-v="compass">${ic('cal',18)}<span>Trimester map</span></button>
     <button type="button" data-act="focus">${ic('focus',18)}<span>Focus mode</span></button>
     <button type="button" data-act="review">${ic('spark',18)}<span>Friday review</span></button>
     <button type="button" data-act="lens">${ic('lock',18)}<span>What my university sees</span></button>
@@ -3334,8 +3337,8 @@ q9Row=function(it){
 };
 function q9Panel(rest,max){
   const shown=rest.slice(0,S.owAll?40:max);if(!shown.length)return '';
-  return `<section class="b q9-pan rise" style="--i:2" aria-labelledby="q9p-h"><div class="b-h"><h2 id="q9p-h">After that</h2><span class="b-sub">${rest.length} more · tap one to open it</span></div>
-    <ul class="q9-list">${shown.map(q9Row).join('')}</ul>${rest.length>shown.length?`<button type="button" class="lnk ow-more" data-act="ow-all">Show ${rest.length-shown.length} more</button>`:''}</section>`;
+  return `<section class="b q9-pan rise" style="--i:2" aria-labelledby="q9p-h"><div class="b-h"><h2 id="q9p-h">After that</h2><span class="b-sub">${Math.min(rest.length,shown.length)} of ${rest.length} shown</span></div>
+    <ul class="q9-list">${shown.map(q9Row).join('')}</ul>${rest.length>shown.length?`<button type="button" class="lnk ow-more" data-act="ow-all">Show all ${rest.length}</button>`:''}</section>`;
 }
 q9Up=function(){
   const ag=agenda(0),nm=nowMin();const ag2=ag.filter(e=>e.k!=='research');const up=ag2.find(e=>nm>=e.s&&nm<e.e)||ag2.find(e=>e.s>nm);
@@ -3360,13 +3363,13 @@ function q9Imp(){
   const im=impact();
   return `<button type="button" class="impill rise" style="--i:4" data-tour="impact" data-act="weeksum"><span class="big-ic">${ic('spark',24)}</span><span style="min-width:0"><span class="t" style="display:block">${L('This week with Margin')}</span><span class="s">${im.kept} promises kept · ${im.held} messages held</span></span>
     <span class="stack" aria-hidden="true"><span style="background:var(--p-yellow)">${ic('check',15,2.4)}</span><span style="background:var(--p-pink)">${ic('pen',15)}</span><span style="background:var(--p-blue)">${ic('inbox',15)}</span></span>
-    <span class="v"><b class="num">${fmt(im.saved)} h</b><small>given back</small></span></button>`;
+    <span class="v"><b class="num">${fmt(im.saved)} h</b><small>given back (est.)</small></span></button>`;
 }
 q9Clear=function(){
   const im=impact();const blk=C().blocks.find(b=>b.today);
   return `<section class="h9 clear rise" style="--i:1" data-tour="impact" aria-labelledby="q9c"><div class="h9-top"><span class="h9-tag">${ic('check',13,2.6)} All clear</span></div>
     <h2 class="h9-t" id="q9c">You're clear for today.</h2>
-    <div class="h9-stats"><div><b class="num">${im.kept}</b><span>promises kept this week</span></div><div><b class="num">${fmt(im.saved)} h</b><span>given back this week</span></div><div><b class="num">${fmt(hoursDone())}/4 h</b><span>writing this week</span></div></div>
+    <div class="h9-stats"><div><b class="num">${im.kept}</b><span>promises kept this week</span></div><div><b class="num">${fmt(im.saved)} h</b><span>given back this week (est.)</span></div><div><b class="num">${fmt(hoursDone())}/4 h</b><span>writing this week</span></div></div>
     <div class="h9-row">${blk&&!blk.done?`<button type="button" class="h9-main" data-act="focus">${ic('focus',17)} Start your writing block</button>`:`<button type="button" class="h9-main" data-act="plan-tmr">${ic('cal',17)} Look at tomorrow</button>`}</div>
     ${RINGS}</section>${q9DiscHTML()}`;
 };
@@ -3435,7 +3438,7 @@ vCompass=function(){
     <section class="b rise" style="--i:3" aria-labelledby="wk9-h"><div class="b-h"><h2 id="wk9-h">This week's writing</h2><span class="tg today num">${fmt(hd)} / ${hp} h</span></div>
       <ul class="q9-list">${C().blocks.map(b=>`<li class="r9"><div class="r9-b"><button type="button" class="r9-tick ${b.done?'on':''}" data-act="blk" data-id="${b.id}" aria-label="${b.done?'Unmark':'Mark done'}: ${b.d} research block">${ic('check',16,2.8)}</button><span class="q9-m"><span class="q9-t">${esc(b.d)}${b.today?' · today':''}</span><span class="q9-s">${esc(b.l)}, ${b.h} h</span></span>${b.today&&!b.done?`<button type="button" class="btn sm accent" data-act="focus">${ic('focus',15)} Start</button>`:''}</div></li>`).join('')}</ul>
       <div class="foot" style="margin-top:12px"><button type="button" class="lnk" data-act="book-block">${ic('plus',14,2.4)} Book a block</button></div></section>
-    <section class="b rise" style="--i:4" aria-labelledby="sm9-h"><div class="b-h"><h2 id="sm9-h">Semester map</h2><span class="b-sub">How heavy each week is</span></div>
+    <section class="b rise" style="--i:4" aria-labelledby="sm9-h"><div class="b-h"><h2 id="sm9-h">Trimester map</h2><span class="b-sub">How heavy each week is</span></div>
       <div class="term14">${Array.from({length:WEEKS},(_,i)=>{const w=i+1,l=level(w);return `<button type="button" class="${w===cw?'cur':''}" data-act="week" data-w="${w}" aria-pressed="${w===sel}" aria-label="Week ${w}, ${LV[l]}"><i style="height:${14+l*15}%;background:var(--h${l})"></i><span>${w}</span></button>`}).join('')}</div>
       <p class="b-sub" style="margin-top:12px">${sel!==cw?`Week ${sel}: ${esc(S.events.filter(e=>e.week===sel).map(e=>e.title).join(', ')||'nothing scheduled')}.`:light.length?`Week${light.length>1?'s':''} ${light.slice(0,2).join(' and ')} look${light.length>1?'':'s'} light: good for writing.`:'Tap a week to see what is in it.'}</p></section>
   </div>
@@ -3519,7 +3522,7 @@ function h10Seed(){
   return {
     friday:false,
     drafts:[
-      {id:'hd1',kind:'reply',est:'reply',icon:'mail',title:'Reply to Priya about Quiz 1, question 4',who:'Priya Das',sid:'s2',text:'Dear Priya,\n\nYou were right to ask. I re-checked question 4 and your answer earns full marks, so your Quiz 1 score is now 9 out of 10.\n\nBest,\nDr. Rahman',why:'Priya asked after class on Wednesday. Margin checked the rubric and your marking notes.',done:false},
+      {id:'hd1',kind:'reply',est:'reply',icon:'mail',title:'Reply to Priya about Quiz 1, question 4',who:'Priya Das',sid:'s2',text:'Dear Priya,\n\nYou were right to ask. I re-checked question 4 and your answer earns full marks, so your Quiz 1 score is now 9 out of 10.\n\nBest,\n'+S.name,why:'Priya asked after class on Wednesday. Margin checked the rubric and your marking notes.',done:false},
       {id:'hd2',kind:'notice',est:'notice',icon:'inbox',title:"The Dean's grade-upload notice, in two lines",who:"Dean's office",sid:null,text:'Midterm grades go on the portal between 20 and 27 October. Late entries need the chair\'s approval, so aim to finish CSE 305 grading by the 25th.',why:'A long notice from the Dean\'s office arrived at 7:40 am. Margin kept only what you need to act on.',done:false}],
     bank:h10Bank(),
     prefs:[
@@ -3535,6 +3538,7 @@ function h10Seed(){
   };
 }
 function h10(){
+  if(S.h10&&!S.h10.sig13){S.h10.drafts.forEach(d=>{if(d.text)d.text=d.text.replace(/\nDr\. Rahman$/,'\n'+S.name)});S.h10.sig13=1}
   if(!S.h10){S.h10=h10Seed();
     // the CSE 201 improvement plan is already drafted this morning, so the demo never waits on the network
     S.fc=S.fc||{};if(!S.fc['cqi-cf1'])S.fc['cqi-cf1']={ok:true,source:'offline',output:{text:'CLO2 attainment was the lowest at 61%. Next term I will add a worked example and a short in-class exercise before the related lab, and move the matching quiz one week earlier so students get feedback before the midterm.',why:'CLO2 (complexity analysis) had the lowest attainment this term.'}};
@@ -4200,7 +4204,7 @@ document.addEventListener('click',e=>{
     case 'digest-clear':snap();digest().forEach(m=>m.done=true);closeLayer();commit('Digest cleared');break;
     case 'focus':startFocus();break;
     case 'week':S.selWeek=+b.dataset.w;render();break;
-    case 'course':openCourse(id);break;
+    case 'course':{openCourse(id);if(b.classList.contains('cc')){setTimeout(()=>{const sh=$('#layer .sheet');const h=sh&&[...sh.querySelectorAll('*')].find(x=>!x.children.length&&/^needs you$/i.test(x.textContent.trim()));if(h)h.scrollIntoView({block:'start'})},80)}break}
     case 'grade':{snap();const as=S.assignments.find(x=>x.id===id);as.graded=Math.min(as.total,as.graded+(+b.dataset.n));const cf=S.courseFiles.find(c=>c.aid===as.id);const tr=cf?(left(as)?[`Course file ${Math.round(cfPct(cf)*100)}%`,`Chair's view: ${as.course} grading ${Math.round(as.graded/as.total*100)}%`]:['Marks distribution and CLO attainment filled in',`Course file now ${Math.round(cfPct(cf)*100)}%`,`Chair's view: ${as.course} grading complete`]):null;commit(left(as)?`${as.graded} of ${as.total} graded`:`${as.course} ${as.title} fully graded`,false,tr);break}
     case 'cf-upload':{snap();const c=S.courseFiles.find(x=>x.id===b.dataset.c);const it=c.items[+b.dataset.k];it.st='done';it.s='Uploaded just now';commit('Moderated paper added to the course file');break}
     case 'cf-note':{const ta=$('#cfn-'+b.dataset.k);const v=ta&&ta.value.trim();if(!v){ta&&ta.focus();toast('Write a line or two first');return}snap();const c=S.courseFiles.find(x=>x.id===b.dataset.c);const it=c.items[+b.dataset.k];it.st='done';it.s='“'+v+'”';commit('Improvement plan saved');break}
@@ -4224,6 +4228,7 @@ document.addEventListener('click',e=>{
     case 'goal-pick':{snap();const t=GOALS.find(g=>g.t===b.dataset.v);C().goals.push(Object.assign({id:uid(),why:''},t,{ms:(t.ms||[]).map(x=>({t:x,done:false}))}));closeLayer();commit('Goal added. Margin will plan around your term');break}
     case 'lang':S.lang=S.lang==='bn'?'en':'bn';save();render();if(layerKey==='me')openMe();toast(S.lang==='bn'?'বাংলা চালু হয়েছে (প্রিভিউ)':'Switched to English');break;
     case 'lens':openLens();break;
+    case 'ai-share':S.aiShare=!S.aiShare;save();openLens();toast(S.aiShare?'Sharing your approve, edit and dismiss counts. Never the text.':'Sharing is off. Nothing is counted.');break;
     case 'lens-chair':closeLayer();S.role='chair';save();render();window.scrollTo(0,0);toast("You're seeing the chair's view. Switch back from the Prototype menu.");break;
     case 'nrule':{S.rules[b.dataset.k]=!S.rules[b.dataset.k];save();b.setAttribute('aria-checked',S.rules[b.dataset.k]);toast('Rule saved. Margin applies it to new mail.');break}
     case 'crunch':{snap();S.crunchDone=(S.crunchDone||[]).concat(id);
@@ -4395,6 +4400,7 @@ var SIG=sigLoad();
 function sigTotals(){const x=SIG||{approved:0,edited:0,dismissed:0};const a=SIG_PILOT.approved+x.approved,e=SIG_PILOT.edited+x.edited,d=SIG_PILOT.dismissed+x.dismissed;return {a,e,d,t:a+e+d}}
 function sigSave(){try{localStorage.setItem(SIG_KEY,JSON.stringify(SIG))}catch(_){}}
 document.addEventListener('click',e=>{
+  if(!S.aiShare)return; // opt-in: nothing is counted until the teacher turns sharing on (privacy sheet)
   const b=e.target.closest('.scard .sc-acts button');if(!b)return;
   const card=b.closest('.scard');const label=(b.textContent||'').trim();
   const kind=b.classList.contains('ghost')?'dismissed':/^edit\b/i.test(label)?'edited':b.classList.contains('primary')?'approved':null;
@@ -4426,7 +4432,7 @@ drawProto=function(){
 /* v13: rebuilt Compass (lib/compass.js) plugs in here */
 if(window.MarginCompass)MarginCompass.install({get S(){return S},VIEWS,TOUR,render:()=>render(),go:v=>go(v),toast:(m,u,t)=>toast(m,u,t),commit:(m,n,t)=>commit(m,n,t),snap:()=>snap(),save:()=>save(),
   esc,ic,ring,L,sCard:c=>sCard(c),hd9,sheet:(h,k)=>sheet(h,k),closeLayer:()=>closeLayer(),copyText:t=>copyText(t),reportPanel:()=>growthReportPanel(),copilotHTML:()=>copilotHTML(),
-  tourOn:()=>!!tour,setCompassLine:f=>{compassLine=f}});
+  tourOn:()=>!!tour,setCompassLine:f=>{compassLine=f},setQ9Rs:f=>{q9Rs=f}});
 routeFromHash();
 render();
 boot8();
