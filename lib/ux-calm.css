@@ -33,3 +33,7 @@
   .h10-ready .h10-ic{width:32px;height:32px}
   .h10-ready .h10-r-l{margin:0!important;flex:1;min-width:0}
 }
+@media (max-width:719px){
+  /* People: segmented control and filter chips reach 44px. Student-name links stay inline text links (the WCAG 2.5.5 inline exception). */
+  .modeseg button,.fbtn{min-height:44px}
+}
