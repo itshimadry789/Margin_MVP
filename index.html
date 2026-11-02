@@ -1588,6 +1588,7 @@ button.r9-b:hover{background:var(--sunk)}
 </style>
 <link rel="stylesheet" href="lib/compass.css">
 <link rel="stylesheet" href="lib/ux-calm.css">
+<link rel="stylesheet" href="lib/calm.css">
 </head>
 <body>
 <div id="app"></div>
@@ -4317,7 +4318,7 @@ document.addEventListener('click',e=>{
     case 'ob-next':obStep=1;onboarding();break;
     case 'ob-back':obStep=0;onboarding();break;
     case 'ob-goal':obGoal=b.dataset.v;onboarding();break;
-    case 'ob-done':S.onboarded=true;save();closeLayer();render();toast('Welcome. Your day is ready.');break;
+    case 'ob-done':S.onboarded=true;save();closeLayer();render();break;
     case 'proto':protoOpen=!protoOpen;drawProto();break;
     case 'role':closeLayer();S.role=b.dataset.v;S.view=S.role==='chair'?'dept':S.role==='admin'?'admin':'today';protoOpen=false;save();render();if(!FRAME)history.replaceState(null,'','#'+ROUTE[S.view]);window.scrollTo(0,0);break;
     case 'settheme':S.theme=b.dataset.v==='system'?null:b.dataset.v;save();render();break;
