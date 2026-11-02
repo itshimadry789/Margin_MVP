@@ -1,0 +1,88 @@
+/* v14 calm layer, from the Impeccable critique and audit (see .impeccable/critique/).
+   Margin is an Operate surface: the tool should disappear into the task. Rules here:
+   - colour means something: one tint for the "do this now" card, warn for late, ok for done; everything else neutral;
+   - no decorative art, glows or eyebrow labels;
+   - lists are rows on the page, not cards inside cards;
+   - one type step for small text (12px) and fewer heavy weights.
+   Loaded last, so it overrides earlier layers without editing them. */
+
+/* ---------- 1. Colour carries meaning ---------- */
+/* Make: four create tiles become quiet surfaces, with no line illustrations or black icon discs. */
+.cc4 .cc{background:var(--surface)!important;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.cc4 .cc:hover{box-shadow:inset 0 0 0 1px var(--line-2)}
+.cc4 .cc .line,.cc4 .cc svg.line{display:none!important}
+.cc4 .cc .ic-b{background:transparent!important;color:var(--ink-2)!important;width:auto;height:auto;border:0}
+.cc4 .cc .by{padding-top:20px!important;padding-right:0!important;color:var(--ink-2)}
+.cc4 .cc{min-height:0!important}
+/* People: the count tiles are plain numbers; only "Late" keeps a signal colour, and only when there is something late. */
+.p9-tiles .st4{background:var(--surface)!important;color:var(--ink)!important;box-shadow:inset 0 0 0 1px var(--line)!important}
+.p9-tiles .st4 .ic-c{background:transparent!important;border:0!important;color:var(--ink-3)!important}
+.p9-tiles .st4.t-late .num{color:var(--warn)}
+/* Today "Your day": the two tiles are neutral; the vase art goes. */
+.mc,.mc.mc-y,.mc.mc-b{background:var(--surface)!important;color:var(--ink)!important;box-shadow:inset 0 0 0 1px var(--line)}
+.mc .bowl{display:none!important}
+.mc .mc-tag{background:var(--frame);color:var(--ink-2)}
+/* Row icons: one neutral chip, not a different pastel per row. */
+.r9-ic{background:var(--sunk)!important;color:var(--ink-2)!important}
+/* Tags: "late" is the only coloured tag; the rest are quiet outlines. */
+.tg.today,.tg.msg,.due.today{background:transparent!important;box-shadow:inset 0 0 0 1px var(--line-2);color:var(--ink-2)!important}
+.tg.late,.due.late{background:var(--warn-soft)!important;color:var(--warn)!important}
+/* Page-title icon disc: no fill. */
+.hello .sunb{background:transparent!important;color:var(--ink-3)!important;width:auto;height:auto}
+
+/* ---------- 2. Decoration removed ---------- */
+.rings,.mhero .rings,.un-art svg.deco,.rs .sticker{display:none!important}
+.un-art{background:var(--surface)!important;color:var(--ink)!important;box-shadow:inset 0 0 0 1px var(--line)}
+.un-art .ic-c{background:var(--frame)!important;color:var(--ink-2)!important}
+.mhero .mh-t,.mhero .mh-s{max-width:none!important}
+.g9h::after{display:none!important}           /* radial glow behind the Grow hero */
+.cx-hero .cx-hero-r{display:block!important}  /* the rule line now carries the "Sample data" tag */
+
+/* ---------- 3. Lists are rows, not cards in cards ---------- */
+@media (max-width:719px){
+  .q9-pan,.v9p > section.b:has(> .q9-list),.v9p > section.card,.v9p > section.b.cx-toolsrow{background:transparent!important;padding:0!important;box-shadow:none!important}
+  .mhero .mh-tag{display:none}                 /* "9 things · about 11 min" is the list's job */
+  .h10 .h10-note{background:transparent!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:inset 0 0 0 1px var(--line)!important}
+  .h10 .h10-note > b ~ span{display:none}     /* one line: "2 drafts are ready", not the list of them */
+}
+/* Grow pipeline: columns are labelled lanes, not a third level of cards. */
+.cx-col{background:transparent!important;border:0!important;padding:4px 0!important}
+.cx-pc.pub{opacity:1!important}
+.cx-pc.pub .cx-pc-m,.cx-pc.pub .cx-pc-i{color:var(--ink-3)}
+
+/* Grow phone: Margin's action cards as one-line rows that open the full card. */
+.cx-arows{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.cx-arow{display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:10px 14px;border-radius:18px;background:var(--frame);box-shadow:inset 0 0 0 1px var(--line);text-align:left;color:var(--ink)}
+.cx-arow-ic{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--sunk);color:var(--ink-2);flex:none}
+.cx-arow-m{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.cx-arow-m b{font-size:14.5px;font-weight:700;line-height:1.3}
+.cx-arow-m small{font-size:12px;color:var(--ink-3)}
+.cx-arow > svg{color:var(--ink-3);flex:none}
+.cx-card-sheet .scard{border:0;padding:0;background:transparent}
+.cx-card-sheet .cx-more-lnk{display:none}
+.cx .pill.cx-priv{white-space:normal}
+
+/* ---------- 4. Type: one small step, fewer heavy weights ---------- */
+.tg,.due,.cx-sample,.cx-priv,.sc-priv,.st4 .lbl,.sc-src{font-size:12px!important}
+@media (max-width:719px){.tabs.fl .tb-l{font-size:12px!important}}
+.b-h h2,.msec h2,.cx-sec-h h2,.v9p .card-h h2{font-weight:700!important}
+.cc4 .cc b.t,.st4 .num,.sc-t,.q9-t{font-weight:700!important}
+.cc4 .cc b.t{font-size:17px!important;letter-spacing:-.015em}
+.mc .mc-t{font-weight:700}
+
+/* Desktop Today: the research card is information, not a second hero. */
+.rs{background:var(--surface)!important;color:var(--ink)!important;box-shadow:inset 0 0 0 1px var(--line)!important}
+.rs h3{color:var(--ink)!important}
+.rs .sub,.rs .rwho{color:var(--ink-2)!important}
+.rs .rs-lnk{background:var(--frame)!important;color:var(--ink)!important;border-color:var(--line)!important}
+.rs .ring svg circle:first-child{stroke:var(--sunk)!important}
+.rs .art .ring b{color:var(--ink)!important}
+/* "This week with Margin": one neutral icon, not a blue disc and three coloured dots. */
+.impill .big-ic{background:var(--sunk)!important;color:var(--ink-2)!important}
+.h10-ready .h10-ic{background:var(--sunk)!important;color:var(--ink-2)!important}
+
+/* "Late" text on its soft fill must reach 4.5:1. */
+:root{--late-ink:#9A3412}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--late-ink:#F2A07C}}
+:root[data-theme="dark"]{--late-ink:#F2A07C}
+.tg.late,.due.late{color:var(--late-ink)!important}
