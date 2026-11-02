@@ -1586,6 +1586,7 @@ button.r9-b:hover{background:var(--sunk)}
 .sig-row b{text-align:right}
 @media (max-width:719px){.sig-row{grid-template-columns:minmax(0,1fr) 48px}.sig-bar{grid-column:1/-1;grid-row:2}}
 </style>
+<link rel="stylesheet" href="lib/compass.css">
 </head>
 <body>
 <div id="app"></div>
@@ -1593,6 +1594,8 @@ button.r9-b:hover{background:var(--sunk)}
 <div id="toasts" role="status" aria-live="polite"></div>
 <div id="proto"></div>
 <script src="lib/growth.js"></script>
+<script src="lib/compass-data.js"></script>
+<script src="lib/compass.js"></script>
 <script>
 (function(){
 'use strict';
@@ -3772,6 +3775,7 @@ document.addEventListener('click',e=>{
   const u=new URL(location.href);u.searchParams.delete('growth');location.replace(u.toString());
 },true);
 
+let growthReportPanel=()=>''; // set below when growth features are on; used by the v13 Compass
 if(GROWTH_FEATURES_ENABLED){
 document.documentElement.classList.add('g11');
 const G=window.MarginGrowth,CFG=G.CONFIG;
@@ -4067,6 +4071,7 @@ vToday=function(){
   const i=html.indexOf('</header>');return i<0?html:html.slice(0,i+9)+`<div class="g11-top">${card}</div>`+html.slice(i+9);
 };
 const v10vCompass=vCompass;
+growthReportPanel=()=>reportPanel();
 vCompass=function(){
   const html=v10vCompass();const m='<button type="button" class="impill g9-more';const i=html.indexOf(m);
   return i<0?html.replace(/<\/div>\s*$/,reportPanel()+'</div>'):html.slice(0,i)+reportPanel()+html.slice(i);
@@ -4418,6 +4423,10 @@ drawProto=function(){
   m.insertAdjacentHTML('beforeend',`<h4>AI decisions in this demo</h4><p class="row-s" style="margin:0">${SIG.approved} approved · ${SIG.edited} edited · ${SIG.dismissed} dismissed. Shown to IQAC as AI quality.</p>`);
 };
 
+/* v13: rebuilt Compass (lib/compass.js) plugs in here */
+if(window.MarginCompass)MarginCompass.install({get S(){return S},VIEWS,TOUR,render:()=>render(),go:v=>go(v),toast:(m,u,t)=>toast(m,u,t),commit:(m,n,t)=>commit(m,n,t),snap:()=>snap(),save:()=>save(),
+  esc,ic,ring,L,sCard:c=>sCard(c),hd9,sheet:(h,k)=>sheet(h,k),closeLayer:()=>closeLayer(),copyText:t=>copyText(t),reportPanel:()=>growthReportPanel(),copilotHTML:()=>copilotHTML(),
+  tourOn:()=>!!tour,setCompassLine:f=>{compassLine=f}});
 routeFromHash();
 render();
 boot8();
