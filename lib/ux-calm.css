@@ -1,0 +1,16 @@
+/* v13.1 UX audit fixes outside Compass: phone-width density on People and Make.
+   Only phone widths are touched; desktop layouts are unchanged. */
+@media (max-width:719px){
+  /* People: four big stat tiles took the whole first screen. Make them one compact row so the list starts above the fold. */
+  .p9-tiles{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important;margin-bottom:14px}
+  .p9-tiles .st4{min-height:0;padding:10px 6px;border-radius:18px;align-items:center;justify-content:center;gap:2px}
+  .p9-tiles .st4 .ic-c{display:none}
+  .p9-tiles .st4 .num{position:static;order:-1;font-size:24px}
+  .p9-tiles .st4 .lbl{font-size:11.5px;line-height:1.2;text-align:center}
+
+  /* Make: tile titles and meta lines ran into the illustrations at 390px. */
+  .cc4 .cc{min-height:168px;padding:14px}
+  .cc4 .cc .line{width:64px;height:64px;top:54px;right:4px;opacity:.5}
+  .cc4 .cc .by{padding-top:28px;padding-right:50px;font-size:12px;max-width:100%}
+  .cc4 .cc b.t{font-size:16.5px;line-height:1.15;overflow-wrap:anywhere;hyphens:auto}
+}

@@ -266,3 +266,32 @@
   .cx-demo p{font-size:13px}
   .cx-demo-on{padding-bottom:330px}
 }
+
+/* v13.1: calmer Compass home (UX audit) */
+.cx-tog{margin-top:12px}
+.cx-tog svg{transition:transform .2s}
+.cx-tog[aria-expanded="true"] svg{transform:rotate(90deg)}
+.cx-acts .cx-tog{margin-left:4px}
+.cx-pipe-sum{display:flex;flex-wrap:wrap;gap:6px}
+.cx-pipe-sum span{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:99px;background:var(--frame);border:1px solid var(--line);font-size:13px;font-weight:600;color:var(--ink-2)}
+.cx-pipe-sum b{font-size:15px;color:var(--ink)}
+.cx-week{margin-top:12px}
+.cx-week summary{display:inline-flex;align-items:center;gap:6px;min-height:44px;font-size:13.5px;font-weight:700;color:var(--ink-2);cursor:pointer;list-style:none}
+.cx-week summary::-webkit-details-marker{display:none}
+.cx-week[open] summary svg{transform:rotate(90deg)}
+.cx-week .q9-list{margin-top:4px}
+.cx-clamp{max-height:7.4em;overflow:hidden;-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
+.cx-more-lnk{align-self:flex-start;font-size:12.5px;font-weight:700;color:var(--cool);min-height:32px}
+.cx-more-b{display:flex;flex-direction:column;gap:16px;padding:0 6px 10px}
+.cx-rs .art{display:grid;place-items:center}
+.cx-rs .art .ring b{color:inherit;font:800 15px var(--sans)}
+@media (max-width:719px){
+  .cx .btn.sm,.cx .lnk,.cx .sc-why,.cx .cx-more-lnk{min-height:44px}
+  .cx .cx-mv,.cx .cx-chip:not(.static){min-height:40px}
+  .cx .cx-tabs button{height:44px}
+  .cx-hero .cx-hero-r{display:none}
+  .cx .dhead .lede-s{display:none}
+  .cx .dhead{margin-bottom:14px}
+  .cx .dhead-r{flex-wrap:nowrap;gap:6px;width:100%}
+  .cx .cx-priv{font-size:11.5px;padding:3px 8px;flex:1;min-width:0}
+}

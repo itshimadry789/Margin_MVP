@@ -1587,6 +1587,7 @@ button.r9-b:hover{background:var(--sunk)}
 @media (max-width:719px){.sig-row{grid-template-columns:minmax(0,1fr) 48px}.sig-bar{grid-column:1/-1;grid-row:2}}
 </style>
 <link rel="stylesheet" href="lib/compass.css">
+<link rel="stylesheet" href="lib/ux-calm.css">
 </head>
 <body>
 <div id="app"></div>
@@ -4426,7 +4427,7 @@ drawProto=function(){
 /* v13: rebuilt Compass (lib/compass.js) plugs in here */
 if(window.MarginCompass)MarginCompass.install({get S(){return S},VIEWS,TOUR,render:()=>render(),go:v=>go(v),toast:(m,u,t)=>toast(m,u,t),commit:(m,n,t)=>commit(m,n,t),snap:()=>snap(),save:()=>save(),
   esc,ic,ring,L,sCard:c=>sCard(c),hd9,sheet:(h,k)=>sheet(h,k),closeLayer:()=>closeLayer(),copyText:t=>copyText(t),reportPanel:()=>growthReportPanel(),copilotHTML:()=>copilotHTML(),
-  tourOn:()=>!!tour,setCompassLine:f=>{compassLine=f}});
+  tourOn:()=>!!tour,setCompassLine:f=>{compassLine=f},setQ9Rs:f=>{q9Rs=f}});
 routeFromHash();
 render();
 boot8();
