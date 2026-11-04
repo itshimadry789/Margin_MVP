@@ -1,0 +1,107 @@
+/* v14 calm layer, from the Impeccable critique and audit (see .impeccable/critique/).
+   Margin is an Operate surface: the tool should disappear into the task. Rules here:
+   - colour by kind: each kind of work keeps one hue across the app (see section 1); warn is reserved for late;
+   - no decorative art, glows or eyebrow labels;
+   - lists are rows on the page, not cards inside cards;
+   - one type step for small text (12px) and fewer heavy weights.
+   Loaded last, so it overrides earlier layers without editing them. */
+
+/* ---------- 1. Colour by kind (v14.1) ----------
+   The first calm pass turned every card white. Colour is back, as a system:
+   - each kind of work keeps one hue everywhere: promises and students pink, messages and teaching blue,
+     writing, drafts and time yellow, research and insight lavender, colleagues and replies orange;
+   - big entry tiles (Make, People, Your day) use the full pastel;
+   - list rows and approval cards get a soft tint of their kind, with a full-colour icon chip;
+   - tints mix with the card surface, so dark mode gets deep tints instead of glowing pastels;
+   - warn stays reserved for late. */
+:root{--tint:24%}
+.cc4 .cc .line{opacity:.55}
+/* Rows: tinted by the kind their icon chip already carries. */
+.r9:has(> .r9-b > .r9-ic[style*="--p-pink"]){background:color-mix(in srgb,var(--p-pink) var(--tint),var(--frame))}
+.r9:has(> .r9-b > .r9-ic[style*="--p-blue"]){background:color-mix(in srgb,var(--p-blue) var(--tint),var(--frame))}
+.r9:has(> .r9-b > .r9-ic[style*="--p-yellow"]){background:color-mix(in srgb,var(--p-yellow) var(--tint),var(--frame))}
+.r9:has(> .r9-b > .r9-ic[style*="--p-lav"]){background:color-mix(in srgb,var(--p-lav) var(--tint),var(--frame))}
+.r9:has(> .r9-b > .r9-ic[style*="--p-orange"]){background:color-mix(in srgb,var(--p-orange) var(--tint),var(--frame))}
+.r9:has(> .r9-b > .r9-ic[style*="--p-"]){border-color:transparent}
+/* Approval cards: tinted by the kind their source chip carries (not inside sheets, where the sheet is the card). */
+.scard:has(> .sc-src .sc-ic[style*="--p-pink"]){background:color-mix(in srgb,var(--p-pink) var(--tint),var(--frame))}
+.scard:has(> .sc-src .sc-ic[style*="--p-blue"]){background:color-mix(in srgb,var(--p-blue) var(--tint),var(--frame))}
+.scard:has(> .sc-src .sc-ic[style*="--p-yellow"]){background:color-mix(in srgb,var(--p-yellow) var(--tint),var(--frame))}
+.scard:has(> .sc-src .sc-ic[style*="--p-lav"]){background:color-mix(in srgb,var(--p-lav) var(--tint),var(--frame))}
+.scard:has(> .sc-src .sc-ic[style*="--p-orange"]){background:color-mix(in srgb,var(--p-orange) var(--tint),var(--frame))}
+.scard:has(> .sc-src .sc-ic[style*="--p-"]){border-color:transparent}
+.scard .sc-draft{background:color-mix(in srgb,var(--frame) 78%,transparent)}
+/* "Late" keeps its own signal: the late tag and People's Late tile. */
+.tg.late,.due.late{background:var(--warn-soft)!important}
+
+/* ---------- 2. Decoration removed ---------- */
+.rings,.mhero .rings,.un-art svg.deco,.rs .sticker,.mc .bowl{display:none!important}
+.mhero .mh-t,.mhero .mh-s{max-width:none!important}
+.g9h::after{display:none!important}           /* radial glow behind the Grow hero */
+.cx-hero .cx-hero-r{display:block!important}  /* the rule line now carries the "Sample data" tag */
+
+/* ---------- 3. Lists are rows, not cards in cards ---------- */
+@media (max-width:719px){
+  .q9-pan,.v9p > section.b:has(> .q9-list),.v9p > section.card,.v9p > section.b.cx-toolsrow{background:transparent!important;padding:0!important;box-shadow:none!important}
+  .mhero .mh-tag{display:none}                 /* "9 things · about 11 min" is the list's job */
+  .h10 .h10-note{background:transparent!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:inset 0 0 0 1px var(--line)!important}
+  .h10 .h10-note > b ~ span{display:none}     /* one line: "2 drafts are ready", not the list of them */
+}
+/* Grow pipeline: columns are labelled lanes, not a third level of cards. */
+.cx-col{background:transparent!important;border:0!important;padding:4px 0!important}
+.cx-pc.pub{opacity:1!important}
+.cx-pc.pub .cx-pc-m,.cx-pc.pub .cx-pc-i{color:var(--ink-3)}
+
+/* Grow phone: Margin's action cards as one-line rows that open the full card. */
+.cx-arows{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.cx-arow{display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:10px 14px;border-radius:18px;background:var(--frame);box-shadow:inset 0 0 0 1px var(--line);text-align:left;color:var(--ink)}
+.cx-arow-ic{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--sunk);color:var(--ink-2);flex:none}
+.cx-arow-m{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.cx-arow-m b{font-size:14.5px;font-weight:700;line-height:1.3}
+.cx-arow-m small{font-size:12px;color:var(--ink-3)}
+.cx-arow > svg{color:var(--ink-3);flex:none}
+.cx-card-sheet .scard{border:0;padding:0;background:transparent}
+.cx-card-sheet .cx-more-lnk{display:none}
+.cx .pill.cx-priv{white-space:normal}
+
+/* ---------- 4. Type: one small step, fewer heavy weights ---------- */
+.tg,.due,.cx-sample,.cx-priv,.sc-priv,.st4 .lbl,.sc-src{font-size:12px!important}
+@media (max-width:719px){.tabs.fl .tb-l{font-size:12px!important}}
+.b-h h2,.msec h2,.cx-sec-h h2,.v9p .card-h h2{font-weight:700!important}
+.cc4 .cc b.t,.st4 .num,.sc-t,.q9-t{font-weight:700!important}
+.cc4 .cc b.t{font-size:17px!important;letter-spacing:-.015em}
+.mc .mc-t{font-weight:700}
+
+/* Desktop Today: the research card wears research lavender, as a tint, so it is not a second black hero. */
+.rs{background:color-mix(in srgb,var(--p-lav) 34%,var(--frame))!important;color:var(--ink)!important;box-shadow:none!important}
+.rs h3{color:var(--ink)!important}
+.rs .sub,.rs .rwho{color:var(--ink-2)!important}
+.rs .rs-lnk{background:var(--frame)!important;color:var(--ink)!important;border-color:transparent!important}
+.rs .ring svg circle:first-child{stroke:color-mix(in srgb,var(--p-lav) 45%,var(--frame))!important}
+.rs .art .ring b{color:var(--ink)!important}
+
+/* "Late" text on its soft fill must reach 4.5:1. */
+:root{--late-ink:#9A3412}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--late-ink:#F2A07C}}
+:root[data-theme="dark"]{--late-ink:#F2A07C}
+.tg.late,.due.late{color:var(--late-ink)!important}
+
+/* Grow, colour by kind: phone action rows and research tools carry their kind's colour; sections get a soft tint. */
+.cx-arow{background:color-mix(in srgb,var(--k) var(--tint),var(--frame));box-shadow:none}
+.cx-arow-ic{background:var(--k)!important;color:var(--on-pastel)!important}
+.cx-tl button{background:color-mix(in srgb,var(--k) 18%,var(--frame));border-color:transparent}
+.cx-tl-ic{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--k);color:var(--on-pastel);flex:none}
+.cx-two .cx-col2 > section.b{background:color-mix(in srgb,var(--p-yellow) 22%,var(--frame))}
+.cx-board-b{background:color-mix(in srgb,var(--p-lav) 20%,var(--frame))!important}
+.cx-pipe-sum span{background:var(--frame);border-color:transparent}
+.cx-next{background:color-mix(in srgb,var(--frame) 70%,transparent)}
+.cx-tl button .cx-tl-ic{flex:none}
+/* Make, "In progress": course rows tinted by their ring colour. */
+.r9:has(> .r9-b > .r9-ring[style*="--p-pink"]){background:color-mix(in srgb,var(--p-pink) var(--tint),var(--frame));border-color:transparent}
+.r9:has(> .r9-b > .r9-ring[style*="--p-orange"]){background:color-mix(in srgb,var(--p-orange) var(--tint),var(--frame));border-color:transparent}
+.r9:has(> .r9-b > .r9-ring[style*="--p-blue"]){background:color-mix(in srgb,var(--p-blue) var(--tint),var(--frame));border-color:transparent}
+/* People: promise rows are pink (the promises kind); late ones take the warn tint, today's the yellow. */
+.v9p .list .row{background:color-mix(in srgb,var(--p-pink) 16%,var(--frame));border-color:transparent}
+.v9p .list .row:has(.due.late){background:color-mix(in srgb,var(--warn) 10%,var(--frame))}
+.v9p .list .row:has(.due.today){background:color-mix(in srgb,var(--p-yellow) 22%,var(--frame))}
+.v9p .list .row.done{background:var(--surface)}
