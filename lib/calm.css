@@ -1,39 +1,41 @@
 /* v14 calm layer, from the Impeccable critique and audit (see .impeccable/critique/).
    Margin is an Operate surface: the tool should disappear into the task. Rules here:
-   - colour means something: one tint for the "do this now" card, warn for late, ok for done; everything else neutral;
+   - colour by kind: each kind of work keeps one hue across the app (see section 1); warn is reserved for late;
    - no decorative art, glows or eyebrow labels;
    - lists are rows on the page, not cards inside cards;
    - one type step for small text (12px) and fewer heavy weights.
    Loaded last, so it overrides earlier layers without editing them. */
 
-/* ---------- 1. Colour carries meaning ---------- */
-/* Make: four create tiles become quiet surfaces, with no line illustrations or black icon discs. */
-.cc4 .cc{background:var(--surface)!important;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
-.cc4 .cc:hover{box-shadow:inset 0 0 0 1px var(--line-2)}
-.cc4 .cc .line,.cc4 .cc svg.line{display:none!important}
-.cc4 .cc .ic-b{background:transparent!important;color:var(--ink-2)!important;width:auto;height:auto;border:0}
-.cc4 .cc .by{padding-top:20px!important;padding-right:0!important;color:var(--ink-2)}
-.cc4 .cc{min-height:0!important}
-/* People: the count tiles are plain numbers; only "Late" keeps a signal colour, and only when there is something late. */
-.p9-tiles .st4{background:var(--surface)!important;color:var(--ink)!important;box-shadow:inset 0 0 0 1px var(--line)!important}
-.p9-tiles .st4 .ic-c{background:transparent!important;border:0!important;color:var(--ink-3)!important}
-.p9-tiles .st4.t-late .num{color:var(--warn)}
-/* Today "Your day": the two tiles are neutral; the vase art goes. */
-.mc,.mc.mc-y,.mc.mc-b{background:var(--surface)!important;color:var(--ink)!important;box-shadow:inset 0 0 0 1px var(--line)}
-.mc .bowl{display:none!important}
-.mc .mc-tag{background:var(--frame);color:var(--ink-2)}
-/* Row icons: one neutral chip, not a different pastel per row. */
-.r9-ic{background:var(--sunk)!important;color:var(--ink-2)!important}
-/* Tags: "late" is the only coloured tag; the rest are quiet outlines. */
-.tg.today,.tg.msg,.due.today{background:transparent!important;box-shadow:inset 0 0 0 1px var(--line-2);color:var(--ink-2)!important}
-.tg.late,.due.late{background:var(--warn-soft)!important;color:var(--warn)!important}
-/* Page-title icon disc: no fill. */
-.hello .sunb{background:transparent!important;color:var(--ink-3)!important;width:auto;height:auto}
+/* ---------- 1. Colour by kind (v14.1) ----------
+   The first calm pass turned every card white. Colour is back, as a system:
+   - each kind of work keeps one hue everywhere: promises and students pink, messages and teaching blue,
+     writing, drafts and time yellow, research and insight lavender, colleagues and replies orange;
+   - big entry tiles (Make, People, Your day) use the full pastel;
+   - list rows and approval cards get a soft tint of their kind, with a full-colour icon chip;
+   - tints mix with the card surface, so dark mode gets deep tints instead of glowing pastels;
+   - warn stays reserved for late. */
+:root{--tint:24%}
+.cc4 .cc .line{opacity:.55}
+/* Rows: tinted by the kind their icon chip already carries. */
+.r9:has(> .r9-b > .r9-ic[style*="--p-pink"]){background:color-mix(in srgb,var(--p-pink) var(--tint),var(--frame))}
+.r9:has(> .r9-b > .r9-ic[style*="--p-blue"]){background:color-mix(in srgb,var(--p-blue) var(--tint),var(--frame))}
+.r9:has(> .r9-b > .r9-ic[style*="--p-yellow"]){background:color-mix(in srgb,var(--p-yellow) var(--tint),var(--frame))}
+.r9:has(> .r9-b > .r9-ic[style*="--p-lav"]){background:color-mix(in srgb,var(--p-lav) var(--tint),var(--frame))}
+.r9:has(> .r9-b > .r9-ic[style*="--p-orange"]){background:color-mix(in srgb,var(--p-orange) var(--tint),var(--frame))}
+.r9:has(> .r9-b > .r9-ic[style*="--p-"]){border-color:transparent}
+/* Approval cards: tinted by the kind their source chip carries (not inside sheets, where the sheet is the card). */
+.scard:has(> .sc-src .sc-ic[style*="--p-pink"]){background:color-mix(in srgb,var(--p-pink) var(--tint),var(--frame))}
+.scard:has(> .sc-src .sc-ic[style*="--p-blue"]){background:color-mix(in srgb,var(--p-blue) var(--tint),var(--frame))}
+.scard:has(> .sc-src .sc-ic[style*="--p-yellow"]){background:color-mix(in srgb,var(--p-yellow) var(--tint),var(--frame))}
+.scard:has(> .sc-src .sc-ic[style*="--p-lav"]){background:color-mix(in srgb,var(--p-lav) var(--tint),var(--frame))}
+.scard:has(> .sc-src .sc-ic[style*="--p-orange"]){background:color-mix(in srgb,var(--p-orange) var(--tint),var(--frame))}
+.scard:has(> .sc-src .sc-ic[style*="--p-"]){border-color:transparent}
+.scard .sc-draft{background:color-mix(in srgb,var(--frame) 78%,transparent)}
+/* "Late" keeps its own signal: the late tag and People's Late tile. */
+.tg.late,.due.late{background:var(--warn-soft)!important}
 
 /* ---------- 2. Decoration removed ---------- */
-.rings,.mhero .rings,.un-art svg.deco,.rs .sticker{display:none!important}
-.un-art{background:var(--surface)!important;color:var(--ink)!important;box-shadow:inset 0 0 0 1px var(--line)}
-.un-art .ic-c{background:var(--frame)!important;color:var(--ink-2)!important}
+.rings,.mhero .rings,.un-art svg.deco,.rs .sticker,.mc .bowl{display:none!important}
 .mhero .mh-t,.mhero .mh-s{max-width:none!important}
 .g9h::after{display:none!important}           /* radial glow behind the Grow hero */
 .cx-hero .cx-hero-r{display:block!important}  /* the rule line now carries the "Sample data" tag */
@@ -70,19 +72,36 @@
 .cc4 .cc b.t{font-size:17px!important;letter-spacing:-.015em}
 .mc .mc-t{font-weight:700}
 
-/* Desktop Today: the research card is information, not a second hero. */
-.rs{background:var(--surface)!important;color:var(--ink)!important;box-shadow:inset 0 0 0 1px var(--line)!important}
+/* Desktop Today: the research card wears research lavender, as a tint, so it is not a second black hero. */
+.rs{background:color-mix(in srgb,var(--p-lav) 34%,var(--frame))!important;color:var(--ink)!important;box-shadow:none!important}
 .rs h3{color:var(--ink)!important}
 .rs .sub,.rs .rwho{color:var(--ink-2)!important}
-.rs .rs-lnk{background:var(--frame)!important;color:var(--ink)!important;border-color:var(--line)!important}
-.rs .ring svg circle:first-child{stroke:var(--sunk)!important}
+.rs .rs-lnk{background:var(--frame)!important;color:var(--ink)!important;border-color:transparent!important}
+.rs .ring svg circle:first-child{stroke:color-mix(in srgb,var(--p-lav) 45%,var(--frame))!important}
 .rs .art .ring b{color:var(--ink)!important}
-/* "This week with Margin": one neutral icon, not a blue disc and three coloured dots. */
-.impill .big-ic{background:var(--sunk)!important;color:var(--ink-2)!important}
-.h10-ready .h10-ic{background:var(--sunk)!important;color:var(--ink-2)!important}
 
 /* "Late" text on its soft fill must reach 4.5:1. */
 :root{--late-ink:#9A3412}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--late-ink:#F2A07C}}
 :root[data-theme="dark"]{--late-ink:#F2A07C}
 .tg.late,.due.late{color:var(--late-ink)!important}
+
+/* Grow, colour by kind: phone action rows and research tools carry their kind's colour; sections get a soft tint. */
+.cx-arow{background:color-mix(in srgb,var(--k) var(--tint),var(--frame));box-shadow:none}
+.cx-arow-ic{background:var(--k)!important;color:var(--on-pastel)!important}
+.cx-tl button{background:color-mix(in srgb,var(--k) 18%,var(--frame));border-color:transparent}
+.cx-tl-ic{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--k);color:var(--on-pastel);flex:none}
+.cx-two .cx-col2 > section.b{background:color-mix(in srgb,var(--p-yellow) 22%,var(--frame))}
+.cx-board-b{background:color-mix(in srgb,var(--p-lav) 20%,var(--frame))!important}
+.cx-pipe-sum span{background:var(--frame);border-color:transparent}
+.cx-next{background:color-mix(in srgb,var(--frame) 70%,transparent)}
+.cx-tl button .cx-tl-ic{flex:none}
+/* Make, "In progress": course rows tinted by their ring colour. */
+.r9:has(> .r9-b > .r9-ring[style*="--p-pink"]){background:color-mix(in srgb,var(--p-pink) var(--tint),var(--frame));border-color:transparent}
+.r9:has(> .r9-b > .r9-ring[style*="--p-orange"]){background:color-mix(in srgb,var(--p-orange) var(--tint),var(--frame));border-color:transparent}
+.r9:has(> .r9-b > .r9-ring[style*="--p-blue"]){background:color-mix(in srgb,var(--p-blue) var(--tint),var(--frame));border-color:transparent}
+/* People: promise rows are pink (the promises kind); late ones take the warn tint, today's the yellow. */
+.v9p .list .row{background:color-mix(in srgb,var(--p-pink) 16%,var(--frame));border-color:transparent}
+.v9p .list .row:has(.due.late){background:color-mix(in srgb,var(--warn) 10%,var(--frame))}
+.v9p .list .row:has(.due.today){background:color-mix(in srgb,var(--p-yellow) 22%,var(--frame))}
+.v9p .list .row.done{background:var(--surface)}

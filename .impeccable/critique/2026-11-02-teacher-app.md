@@ -50,3 +50,14 @@ Mostly category-interchangeable. The copy is product-specific, but the visuals f
 - Desktop Today keeps both the 0/9 meter and the Calm/Full switch.
 - "Mark all graded" has Undo but no confirmation.
 - "Grow" vs "Compass" naming.
+
+## 2026-11-04 follow-up: colour reinstated
+Feedback: after the calm pass every card was white, which read as bland, and the colour differentiation was missed.
+- Colour is back as a system, colour by kind:
+  - promises and students pink, messages and teaching blue, writing and time yellow, research and insight lavender, colleagues and replies orange;
+  - full pastels on the entry tiles;
+  - soft tints of the same hue on list rows, approval cards and Grow sections;
+  - warn reserved for late.
+- Dark mode uses deep tints mixed with the card surface.
+- Kept from the calm pass: no decorative donuts or glow, no eyebrow, flat lists, the type step and contrast fixes.
+- Contrast is 4.5:1 or better on all four screens. The probe now reads `color(srgb …)` values.
